@@ -3,54 +3,66 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:models="clr-namespace:FileSync.Shared.Models;assembly=FileSync.Shared"
              mc:Ignorable="d"
              x:Class="FileSync.Views.ItemsPage"
              Title="{Binding Title}"
-             x:Name="BrowseItemsPage">
+             x:Name="BrowseItemsPage"
+             Visual="Material">
 
-    <ContentPage.ToolbarItems>
-        <!--<ToolbarItem Text="Add" Clicked="AddItem_Clicked" />-->
-    </ContentPage.ToolbarItems>
+    <RefreshView IsRefreshing="{Binding IsBusy, Mode=TwoWay}" Command="{Binding LoadItemsCommand}">
+        <Grid>
+            <CollectionView x:Name="ItemsCollectionView" BackgroundColor="{StaticResource Gray}"
+                ItemsSource="{Binding Items}">
+                <d:CollectionView.ItemsSource>
+                    <x:Array Type="{x:Type models:SyncItem}">
+                        <models:SyncItem CreateDate="2020-01-01 15:20" Length="1200" Name="Test.txt"/>
+                        <models:SyncItem CreateDate="2020-01-01 15:20" Length="23200" Name="Test2.txt"/>
+                    </x:Array>
+                </d:CollectionView.ItemsSource>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid BackgroundColor="{StaticResource Gray}" Padding="0,0,0,0">
+                            <Grid Padding="10" HeightRequest="80" BackgroundColor="White" Margin="1,0,1,1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1.5*"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
 
-    <StackLayout>
-        <ListView x:Name="ItemsListView"
-                ItemsSource="{Binding Items}"
-                VerticalOptions="FillAndExpand"
-                HasUnevenRows="true"
-                RefreshCommand="{Binding LoadItemsCommand}"
-                IsPullToRefreshEnabled="true"
-                IsRefreshing="{Binding IsBusy, Mode=OneWay}"
-                CachingStrategy="RecycleElement"
-                ItemSelected="OnItemSelected">
-            <d:ListView.ItemsSource>
-                <x:Array Type="{x:Type x:String}">
-                    <x:String>First Item</x:String>
-                    <x:String>Second Item</x:String>
-                    <x:String>Third Item</x:String>
-                    <x:String>Fourth Item</x:String>
-                    <x:String>Fifth Item</x:String>
-                    <x:String>Sixth Item</x:String>
-                </x:Array>
-            </d:ListView.ItemsSource>
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <StackLayout Padding="10">
-                            <Label Text="{Binding Text}" 
-                                d:Text="{Binding .}"
-                                LineBreakMode="NoWrap" 
-                                Style="{DynamicResource ListItemTextStyle}" 
-                                FontSize="16" />
-                            <Label Text="{Binding Description}" 
-                                d:Text="Item description"
-                                LineBreakMode="NoWrap"
-                                Style="{DynamicResource ListItemDetailTextStyle}"
-                                FontSize="13" />
-                        </StackLayout>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </StackLayout>
-
+                                <Frame CornerRadius="32" HeightRequest="24" WidthRequest="24" 
+                                       Grid.RowSpan="2" Margin="4"
+                                       VerticalOptions="Center" HorizontalOptions="Center"
+                                       BackgroundColor="{StaticResource NavigationPrimary}"/>
+                                <Image Source="{Binding Name, Converter={StaticResource FileNameToImageConverter}}" 
+                                       Grid.RowSpan="2" Margin="4" 
+                                       HeightRequest="32" WidthRequest="32"
+                                       VerticalOptions="Center" HorizontalOptions="Center"/>
+                                <Label Grid.Column="1" Text="{Binding Name}" 
+                                       d:Text="{Binding Name}"
+                                       Style="{StaticResource LabelContentStyle}" 
+                                       FontSize="Title" />
+                                <Label Grid.Column="1" Grid.Row="1" 
+                                       Text="{Binding Length, Converter={StaticResource FileSizeFormatConverter}}" 
+                                       HorizontalOptions="End"
+                                       Style="{StaticResource LabelContentSecondaryStyle}"/>
+                                <Label Grid.Column="1" Grid.Row="1" 
+                                       Text="{Binding CreateDate, StringFormat='{}{0:yyyy-MM-dd HH:mm:ss}'}" 
+                                       Style="{StaticResource LabelContentSecondaryStyle}"/>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnItemSelected"></TapGestureRecognizer>
+                                </Grid.GestureRecognizers>
+                            </Grid>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Label Text="No items" 
+                   VerticalOptions="Center" HorizontalOptions="Center"
+                   IsVisible="{Binding Items, Converter={StaticResource CountToVisibilityConverter}, ConverterParameter=1}"/>
+        </Grid>
+    </RefreshView>
 </ContentPage>

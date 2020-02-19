@@ -78,7 +78,7 @@ namespace FileSync.Shared.Services
             return new List<SyncItem>();
         }
 
-        public async Task<bool> UploadFilesAsync(string[] files, Action<int, int> onProgressChanged)
+        public async Task<bool> UploadFilesAsync(IEnumerable<string> files, Action<int, int> onProgressChanged)
         {
             try
             {
@@ -91,9 +91,15 @@ namespace FileSync.Shared.Services
 
                 foreach (var file in files)
                 {
-                    counter++;
+                    onProgressChanged?.Invoke(++counter, default);
+
                     var name = Path.GetFileName(file);
-                    var bytes = File.ReadAllBytes(file);
+                    byte[] bytes = null;
+                    using(var fileStream = new FileStream(file, FileMode.Open))
+                    {
+                        bytes = new byte[fileStream.Length];
+                        fileStream.Read(bytes, 0, (int)fileStream.Length);
+                    }
                     using (var stream = new MemoryStream(bytes))
                     {
                         var uploadTask = storage.Child(_root).Child(name).PutAsync(stream);
@@ -106,6 +112,7 @@ namespace FileSync.Shared.Services
                             Length = bytes.Length,
                             CreateDate = DateTime.Now.ToUniversalTime()
                         });
+                        await Task.Delay(1000);
                     }
                 }
                 return true;

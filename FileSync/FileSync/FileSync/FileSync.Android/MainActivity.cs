@@ -1,16 +1,20 @@
-﻿using System;
-
+﻿
+using System.Collections.Generic;
 using Android.App;
-using Android.Content.PM;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using Android.OS;
 using Android.Content;
+using Android.Content.PM;
+using Android.OS;
+using Android.Provider;
+using Android.Runtime;
+using Android.Widget;
+using Xamarin.Forms;
 
 namespace FileSync.Droid
 {
     [Activity(Label = "FileSync", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [IntentFilter(new[] { Intent.ActionSend, Intent.ActionSendMultiple },
+        Categories = new[] { Intent.CategoryDefault },
+        DataMimeTypes = new string[] { @"application/octet-stream", @"text/*", @"application/pdf", @"image/*", "application/epub+zip", "audio/*", "video/*" })]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -29,10 +33,10 @@ namespace FileSync.Droid
 
             if (isSendingFiles) 
             {
-                //TODO: process URIs and send message
+                MessagingCenter.Send((object)this, ViewModels.UploadViewModel.UploadFileMessageName, (object)Intent);
             }
         }
-        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 

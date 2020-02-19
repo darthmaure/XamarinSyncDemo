@@ -23,9 +23,12 @@ namespace FileSync
             DependencyService.Register<ItemsViewModel>();
             DependencyService.Register<LoginViewModel>();
             DependencyService.Register<AboutViewModel>();
+            DependencyService.Register<UploadViewModel>();
 
             if (isSendingFiles)
-            { }
+            {
+                MainPage = new UploadView { BindingContext = DependencyService.Get<UploadViewModel>() };
+            }
             else
             {
                 var navigationService = DependencyService.Get<INavigationService>();

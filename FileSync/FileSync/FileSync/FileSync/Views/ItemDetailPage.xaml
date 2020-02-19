@@ -4,14 +4,33 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="FileSync.Views.ItemDetailPage"
-             Title="{Binding Title}">
+             Shell.NavBarHasShadow="False"
+             x:Class="FileSync.Views.ItemDetailPage" 
+             IsBusy="{Binding IsBusy}">
 
-    <StackLayout Spacing="20" Padding="15">
-        <Label Text="Text:" FontSize="Medium" />
-        <Label Text="{Binding Item.Text}" d:Text="Item name" FontSize="Small"/>
-        <Label Text="Description:" FontSize="Medium" />
-        <Label Text="{Binding Item.Description}" d:Text="Item description" FontSize="Small"/>
+    <StackLayout Padding="15">
+        <Grid HeightRequest="160" BackgroundColor="{StaticResource NavigationPrimary}"
+              Margin="-15,-15,-15,10">
+            <Image Source="{Binding Item.Name, Converter={StaticResource FileNameToImageConverter}}" 
+                   Style="{StaticResource LargeImageStyle}"/>
+        </Grid>
+        <Label Text="Name:" Style="{StaticResource LabelStyle}" Margin="0,15,0,0"/>
+        <Label Text="{Binding Item.Name}" d:Text="file.txt" 
+               Style="{StaticResource LabelContentStyle}"/>
+        <Label Text="Created:" Style="{StaticResource LabelStyle}" Margin="0,15,0,0"/>
+        <Label Text="{Binding Item.CreateDate}" 
+               d:Text="2020-01-01 07:15" 
+               Style="{StaticResource LabelContentStyle}"/>
+        <Label Text="Size:" Style="{StaticResource LabelStyle}" Margin="0,15,0,0"/>
+        <Label Text="{Binding Item.Length, Converter={StaticResource FileSizeFormatConverter}}" 
+               Style="{StaticResource LabelContentStyle}"/>
+
+        <Button Text="Download" Style="{StaticResource ButtonStyle}" Margin="0,6,0,0"
+                ImageSource="outline_download_white_36dp.png"
+                Command="{Binding DownloadCommand}"/>
+        <Button Text="Delete" Style="{StaticResource ButtonStyle}" Margin="0,6,0,0"
+                ImageSource="outline_delete_white_36dp.png"
+                Command="{Binding DeleteCommand}"/>
     </StackLayout>
     
 </ContentPage>

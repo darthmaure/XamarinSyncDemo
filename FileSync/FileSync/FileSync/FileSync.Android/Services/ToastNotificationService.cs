@@ -9,7 +9,7 @@ namespace FileSync.Droid.Services
     {
         public void ShowToast(string message)
         {
-            Toast.MakeText(Android.App.Application.Context, message, ToastLength.Short).Show();
+            Xamarin.Essentials.MainThread.BeginInvokeOnMainThread(() => Toast.MakeText(Android.App.Application.Context, message, ToastLength.Short).Show());
         }
     }
 }

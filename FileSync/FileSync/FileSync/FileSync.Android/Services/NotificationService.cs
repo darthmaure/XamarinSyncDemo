@@ -53,7 +53,7 @@ namespace FileSync.Droid.Services
                 : int.Parse(parameters);
 
             var builder = new NotificationCompat.Builder(_context, _channelId)
-              .SetAutoCancel(true) 
+              .SetAutoCancel(false)
               .SetContentTitle(title) 
               .SetSmallIcon(icon) 
               .SetContentText(message)

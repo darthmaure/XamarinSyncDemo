@@ -6,45 +6,40 @@
              xmlns:vm="clr-namespace:FileSync.ViewModels"
              mc:Ignorable="d"
              x:Class="FileSync.Views.LoginPage">
-    <ContentPage.Resources>
-        <Style x:Key="EntryFrameStyle" TargetType="Frame">
-            <Setter Property="Margin" Value="10,0,10,10"/>
-            <Setter Property="HasShadow" Value="False"/>
-            <Setter Property="Padding" Value="10,4"/>
-            <Setter Property="BorderColor" Value="{StaticResource NavigationPrimary}"/>
-            <Setter Property="IsTabStop" Value="False"/>
-        </Style>
-    </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout x:DataType="vm:LoginViewModel" Padding="10,0,10,10" BackgroundColor="White">
-            <Frame BackgroundColor="{StaticResource NavigationPrimary}" HeightRequest="80" Margin="-10,0">
-                <Image HorizontalOptions="Center" VerticalOptions="Center" Source="outline_lock_white_36dp.png"/>
+        <StackLayout x:DataType="vm:LoginViewModel" Padding="16,0,16,10" BackgroundColor="White">
+            <Frame BackgroundColor="{StaticResource NavigationPrimary}" HeightRequest="80" Margin="-16,0">
+                <Image Style="{StaticResource LargeImageStyle}" 
+                       Source="outline_lock_white_36dp.png"/>
             </Frame>
-            <Label Text="Email:" Margin="10,0"/>
+            <Label Text="Email:" Style="{StaticResource LabelStyle}"/>
             <Frame Style="{StaticResource EntryFrameStyle}">
                 <Entry HorizontalOptions="FillAndExpand"
                        Keyboard="Email"
+                       Placeholder="Email"
                        Text="{Binding Email, Mode=TwoWay}"
                        Visual="Custom">
                 </Entry>
             </Frame>
-            <Label Text="Password:" Margin="10,0"/>
+            <Label Text="Password:" Style="{StaticResource LabelStyle}"/>
             <Frame Style="{StaticResource EntryFrameStyle}">
                 <Entry HorizontalOptions="FillAndExpand"
                        IsPassword="True"
+                       Placeholder="Password"
                        Text="{Binding Password, Mode=TwoWay}"
                        Visual="Custom">
                 </Entry>
             </Frame>
-            <Label Text="API Key:" Margin="10,0"/>
+            <Label Text="API Key:" Style="{StaticResource LabelStyle}"/>
             <Frame Style="{StaticResource EntryFrameStyle}">
                 <Entry HorizontalOptions="FillAndExpand"
                        Keyboard="Default"
+                       Placeholder="API Key"
                        Text="{Binding ApiKey, Mode=TwoWay}"
                        Visual="Custom">
                 </Entry>
             </Frame>
-            <Label Text="Storage Bucket:" Margin="10,0"/>
+            <Label Text="Storage Bucket:" Style="{StaticResource LabelStyle}"/>
             <Frame Style="{StaticResource EntryFrameStyle}">
                 <StackLayout Orientation="Horizontal">
                     <Entry HorizontalOptions="FillAndExpand"
@@ -56,7 +51,7 @@
                     <Label Text=".appspot.com" VerticalOptions="Center"/>
                 </StackLayout>
             </Frame>
-            <Label Text="Database url:" Margin="10,0"/>
+            <Label Text="Database url:" Style="{StaticResource LabelStyle}"/>
             <Frame Style="{StaticResource EntryFrameStyle}">
                 <StackLayout Orientation="Horizontal">
                     <Entry HorizontalOptions="FillAndExpand"
@@ -68,10 +63,9 @@
                     <Label Text=".firebaseio.com" VerticalOptions="Center"/>
                 </StackLayout>
             </Frame>
-            <Button Text="Login" Command="{Binding LoginCommand}"
-                    Margin="10" 
-                    BackgroundColor="{StaticResource NavigationPrimary}" 
-                    TextColor="White"/>
+            <Button Text="Login" 
+                    Command="{Binding LoginCommand}"
+                    Style="{StaticResource ButtonStyle}"/>
 
 
             <Label Text="{Binding Title}" Margin="10,50,10,10"/>

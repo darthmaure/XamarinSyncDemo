@@ -27,15 +27,11 @@ namespace FileSync.Views
             BindingContext = _viewModel = new ItemsViewModel();
         }
 
-        async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
+        async void OnItemSelected(object sender, EventArgs args)
         {
-            if (!(args.SelectedItem is SyncItem item))
-                return;
-
+            var layout = (BindableObject)sender;
+            var item = (SyncItem)layout.BindingContext;
             await Navigation.PushAsync(new ItemDetailPage(new ItemDetailViewModel(item)));
-
-            // Manually deselect item.
-            ItemsListView.SelectedItem = null;
         }
 
 

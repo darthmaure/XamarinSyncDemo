@@ -12,7 +12,9 @@ namespace FileSync.Droid.Services
         {
             try
             {
-                Process.KillProcess(Process.MyPid());
+                //Process.KillProcess(Process.MyPid());
+                //r activity = Android.App.Application.ActivityService.;//
+                App.Current.Quit();
             }
             catch (Exception e)
             {

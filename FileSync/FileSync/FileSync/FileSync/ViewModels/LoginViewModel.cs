@@ -17,6 +17,12 @@ namespace FileSync.ViewModels
             _configurationService = DependencyService.Get<IConfigurationService>();
             _navigationService = DependencyService.Get<INavigationService>();
             LoginCommand = new Command(async () => await OnLogin());
+#if DEBUG
+            email = "darthmaure@gmail.com";
+            apiKey = "AIzaSyD39oDg8qhyj-f3Aj60pPlYHKfyyy5BVrE";
+            bucket = "xamarinstoragetest1";
+            database = "xamarinstoragetest1";
+#endif
         }
 
         private string email;

@@ -11,6 +11,6 @@ namespace FileSync.Shared.Services
         Task<bool> DeleteFileAsync(SyncItem item);
         Task<string> GetDownloadFileUrlAsync(string filename);
         Task<IList<SyncItem>> GetFilesAsync();
-        Task<bool> UploadFilesAsync(string[] files, Action<int, int> onProgressChanged);
+        Task<bool> UploadFilesAsync(IEnumerable<string> files, Action<int, int> onProgressChanged);
     }
 }

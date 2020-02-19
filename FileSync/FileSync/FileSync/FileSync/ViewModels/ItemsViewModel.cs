@@ -2,29 +2,29 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
-
-using Xamarin.Forms;
-
-using FileSync.Views;
 using FileSync.Shared.Models;
+using FileSync.Shared.Services;
+using Xamarin.Forms;
 
 namespace FileSync.ViewModels
 {
     public class ItemsViewModel : BaseMobileViewModel
     {
+        private readonly ISyncService _syncService;
+
         public ObservableCollection<SyncItem> Items { get; set; }
         public Command LoadItemsCommand { get; set; }
 
         public ItemsViewModel()
         {
-            Title = "Browse";
+            Title = "All items";
             Items = new ObservableCollection<SyncItem>();
-            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
+            LoadItemsCommand = new Command(async () => await OnLoadItemsAsync());
 
-
+            _syncService = DependencyService.Get<ISyncService>();
         }
 
-        async Task ExecuteLoadItemsCommand()
+        async Task OnLoadItemsAsync()
         {
             if (IsBusy)
                 return;
@@ -34,11 +34,11 @@ namespace FileSync.ViewModels
             try
             {
                 Items.Clear();
-                //var items = await DataStore.GetItemsAsync(true);
-                //foreach (var item in items)
-                //{
-                //    Items.Add(item);
-                //}
+                var items = await _syncService.GetFilesAsync();
+                foreach (var item in items)
+                {
+                    Items.Add(item);
+                }
             }
             catch (Exception ex)
             {

@@ -1,7 +1,9 @@
-﻿namespace FileSync.Services
+﻿using System.Collections.Generic;
+
+namespace FileSync.Services
 {
     public interface IFilesLocationService
     {
-        string GetActualPathForFile(object uri, object context);
+        IList<string> GetActualPathForFiles(object intent, object context);
     }
 }
