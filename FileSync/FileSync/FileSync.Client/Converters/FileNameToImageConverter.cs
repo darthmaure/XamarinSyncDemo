@@ -1,12 +1,28 @@
 ﻿using System;
 using System.Globalization;
-using Xamarin.Forms;
+using System.Windows.Data;
 
-namespace FileSync.Converters
+namespace FileSync.Client.Converters
 {
     public class FileNameToImageConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var result = GetImage(value);
+            if (!string.IsNullOrEmpty(result))
+            {
+                return $"pack://application:,,,/Resources/{result}";
+            }
+            return "pack://application:,,,/Resources/outline_insert_drive_file_white_36dp.png";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        private string GetImage(object value)
         {
             var file = value?.ToString();
             if (string.IsNullOrEmpty(file)) return string.Empty;
@@ -44,7 +60,7 @@ namespace FileSync.Converters
                 case ".wma":
                     return "outline_library_music_white_36dp.png";
                 case ".pdf":
-                    return "outline_picture_as_pdf_white_36dp.pdf";
+                    return "outline_picture_as_pdf_white_36dp.png";
                 case ".txt":
                 case ".doc":
                 case ".docx":
@@ -54,11 +70,6 @@ namespace FileSync.Converters
                 default:
                     return "outline_cloud_upload_black_18dp.png";
             }
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
         }
     }
 }

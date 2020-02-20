@@ -59,6 +59,11 @@
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
 
+                                    <Ellipse Margin="4" Width="40" Height="40" Grid.RowSpan="2"/>
+                                    <Image Source="{Binding Path=Name, Converter={StaticResource FileNameToImageConverter}}" Width="30" Height="30" 
+                                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                                           Grid.RowSpan="2" Margin="4"/>
+
                                     <TextBlock x:Name="header" Text="{Binding Path=Name}" FontSize="16" Grid.Column="1" FontWeight="Light" Margin="0,4,0,0"/>
                                     <TextBlock x:Name="date" Text="{Binding Path=CreateDate, StringFormat='{}{0:yyyy-MM-dd HH:mm}'}" Grid.Column="1" Grid.Row="1" FontSize="12.5" Margin="0,4"/>
                                     <TextBlock x:Name="size" Text="{Binding Path=Length, Converter={StaticResource FileSizeFormatConverter}}" Grid.Column="1" Grid.Row="1" FontSize="12.5" HorizontalAlignment="Right" Margin="0,4"/>
