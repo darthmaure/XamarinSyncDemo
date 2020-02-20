@@ -11,7 +11,7 @@ using Xamarin.Forms;
 
 namespace FileSync.Droid
 {
-    [Activity(Label = "FileSync", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "FileSync", Icon = "@mipmap/ic_fs_main", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     [IntentFilter(new[] { Intent.ActionSend, Intent.ActionSendMultiple },
         Categories = new[] { Intent.CategoryDefault },
         DataMimeTypes = new string[] { @"application/octet-stream", @"text/*", @"application/pdf", @"image/*", "application/epub+zip", "audio/*", "video/*" })]

@@ -1,22 +1,27 @@
 ﻿using System.Threading.Tasks;
+using System.Windows.Input;
+using FileSync.Client.Helpers;
 using FileSync.Shared.Models;
 using FileSync.Shared.Services;
-using Xamarin.Forms;
 
-namespace FileSync.ViewModels
+namespace FileSync.Client.ViewModels
 {
-    public class LoginViewModel : BaseMobileViewModel
-    {
+    public class LoginViewModel : BaseClientViewModel
+	{
         private readonly ILoginService _loginService;
         private readonly IConfigurationService _configurationService;
         private readonly INavigationService _navigationService;
 
-        public LoginViewModel()
+        public LoginViewModel(
+            ILoginService loginService, 
+            IConfigurationService configurationService, 
+            INavigationService navigationService)
         {
-            _loginService = DependencyService.Get<ILoginService>();
-            _configurationService = DependencyService.Get<IConfigurationService>();
-            _navigationService = DependencyService.Get<INavigationService>();
-            LoginCommand = new Command(async () => await OnLogin());
+            _loginService = loginService;
+            _configurationService = configurationService;
+            _navigationService = navigationService;
+
+            LoginCommand = new RelayCommand(async (p) => await OnLogin(), p => CanLogin());
         }
 
         private string email;
@@ -59,17 +64,10 @@ namespace FileSync.ViewModels
             set => SetProperty(ref bucket, value);
         }
 
-        private string message;
+        public ICommand LoginCommand { get; set; }
 
-        public string Message
-        {
-            get => message;
-            set => SetProperty(ref message, value);
-        }
-
-        public Command LoginCommand { get; set; }
-
-        private async Task OnLogin()
+        public override async Task OnNavigated() => await Task.CompletedTask;
+        private async Task OnLogin() 
         {
             IsBusy = true;
             Message = null;
@@ -78,7 +76,7 @@ namespace FileSync.ViewModels
                 var loginResult = await _loginService.Login(Email, Password, ApiKey);
                 if (loginResult)
                 {
-                    await _configurationService.SaveAsync(new Configuration 
+                    await _configurationService.SaveAsync(new Configuration
                     {
                         ApiKey = ApiKey,
                         Bucket = Bucket,
@@ -106,6 +104,10 @@ namespace FileSync.ViewModels
             {
                 IsBusy = false;
             }
+        }
+        private bool CanLogin()
+        {
+            return true;
         }
     }
 }

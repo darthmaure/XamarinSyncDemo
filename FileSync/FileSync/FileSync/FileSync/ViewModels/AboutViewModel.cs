@@ -18,10 +18,14 @@ namespace FileSync.ViewModels
             _loginService = DependencyService.Get<ILoginService>();
             _navigationService = DependencyService.Get<INavigationService>();
 
+            AppName = AppInfo.Name;
+            Version = AppInfo.VersionString;
             LogoutCommand = new Command(async () => await Logout());
         }
 
         public ICommand LogoutCommand { get; }
+        public string AppName { get; }
+        public string Version { get; }
 
         private async Task Logout()
         {

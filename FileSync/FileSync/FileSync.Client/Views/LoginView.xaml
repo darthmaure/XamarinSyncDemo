@@ -1,0 +1,64 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+                    xmlns:vm="clr-namespace:FileSync.Client.ViewModels"
+                    xmlns:behaviors="clr-namespace:FileSync.Client.Behaviors">
+    <DataTemplate DataType="{x:Type vm:LoginViewModel}">
+        <Grid Margin="10,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="46"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="1" Height="60" Width="60"
+                    Background="{StaticResource AccentColor}"
+                    VerticalAlignment="Center" HorizontalAlignment="Center"
+                    CornerRadius="8">
+                <Image Source="pack://application:,,,/Resources/FileSync.png" 
+                       ClipToBounds="True" VerticalAlignment="Center" Height="40" Width="40"/>
+            </Border>
+            <TextBlock Grid.Row="2" Text="Email" Style="{StaticResource TextBlockLabelStyle}"/>
+            <TextBox Grid.Row="3" 
+                     Text="{Binding Path=Email, Mode=TwoWay}" 
+                     Style="{StaticResource TextBoxEntryStyle}"/>
+            <TextBlock Grid.Row="4" Text="Password" Style="{StaticResource TextBlockLabelStyle}"/>
+            <PasswordBox Grid.Row="5" Style="{StaticResource PasswordBoxEntryStyle}">
+                <i:Interaction.Behaviors>
+                    <behaviors:PasswordBoxBehavior PasswordText="{Binding Path=Password, Mode=TwoWay}" />
+                </i:Interaction.Behaviors>
+            </PasswordBox>
+            <TextBlock Grid.Row="6" Text="API Key" Style="{StaticResource TextBlockLabelStyle}"/>
+            <TextBox Grid.Row="7" 
+                     Text="{Binding Path=ApiKey, Mode=TwoWay}" 
+                     Style="{StaticResource TextBoxEntryStyle}"/>
+            <TextBlock Grid.Row="8" Text="Bucket" Style="{StaticResource TextBlockLabelStyle}"/>
+            <TextBox Grid.Row="9" 
+                     Text="{Binding Path=Bucket, Mode=TwoWay}" 
+                     Style="{StaticResource TextBoxEntryStyle}"/>
+            <TextBlock Grid.Row="10" Text="Database" Style="{StaticResource TextBlockLabelStyle}"/>
+            <TextBox Grid.Row="11" 
+                     Text="{Binding Path=Database, Mode=TwoWay}" 
+                     Style="{StaticResource TextBoxEntryStyle}"/>
+
+            <Button Grid.Row="12" Content="Login" 
+                    Command="{Binding Path=LoginCommand}"
+                    Style="{StaticResource ButtonDefault}"/>
+            <TextBlock Text="{Binding Path=Message}" 
+                       Foreground="Red" Grid.Row="13"
+                       VerticalAlignment="Top" Margin="6,1"
+                       Style="{StaticResource TextBlockLabelStyle}"
+                       Visibility="{Binding Path=Message, Converter={StaticResource NullToVisibilityConverter}}"/>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

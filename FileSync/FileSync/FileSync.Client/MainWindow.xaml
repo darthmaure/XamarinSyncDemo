@@ -3,10 +3,113 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:FileSync.Client"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:behaviors="clr-namespace:FileSync.Client.Behaviors"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        AllowsTransparency="True"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="True"
+        WindowStyle="None"
+        ResizeMode="CanResize" Background="Transparent"
+        Height="450" Width="500"
+        DataContext="{Binding Shell, Source={StaticResource locator}}">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding Path=LoadedCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <WindowChrome.WindowChrome>
+        <WindowChrome  CaptionHeight="0" ResizeBorderThickness="5" />
+    </WindowChrome.WindowChrome>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Views/LoginView.xaml"/>
+                <ResourceDictionary Source="Views/ItemsView.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Border BorderThickness="0" BorderBrush="{StaticResource AccentColor}" SnapsToDevicePixels="True" UseLayoutRounding="True" CornerRadius="0" Margin="4">
+        <Border.Effect>
+            <DropShadowEffect Color="{StaticResource AccentColorValue}"  Direction="0" BlurRadius="4" ShadowDepth="0" />
+        </Border.Effect>
+        <Grid ClipToBounds="True">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="46"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
 
-    </Grid>
+            <!--Title panel for window drag-->
+            <Border Grid.Row="0" Background="{StaticResource BackgroundDefault}" Height="46">
+                <i:Interaction.Behaviors>
+                    <behaviors:WindowMoveBehavior />
+                </i:Interaction.Behaviors>
+            </Border>
+            <!--Content-->
+            <Border Grid.RowSpan="2" Background="{StaticResource BackgroundDefault}" >
+                <i:Interaction.Behaviors>
+                    <behaviors:WindowMoveBehavior />
+                </i:Interaction.Behaviors>
+                <ContentControl Content="{Binding Path=Current}" ClipToBounds="True" Margin="0" IsTabStop="False" FocusVisualStyle="{x:Null}"/>
+            </Border>
+
+            <!--Busy indicator-->
+            <Grid Grid.RowSpan="2"
+                  Style="{StaticResource GridBusyPanel}"
+                  Visibility="{Binding Path=Current.IsBusy, Converter={StaticResource BooleanToVisibilityConverter}, TargetNullValue=Collapsed, FallbackValue=Collapsed}">
+                <Control Style="{StaticResource ProgressRingStyle}"/>
+            </Grid>
+
+
+            <!--Window commands-->
+            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Stretch">
+                <!--<Button Style="{StaticResource ButtonWin10CommandStyle}" 
+                        Command="{Binding LogoutCommand}"
+                        Visibility="{Binding Path=IsLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Grid>
+                        <Path VerticalAlignment="Center" HorizontalAlignment="Center" Height="16" Width="19" StrokeThickness="0.8" Stretch="Fill"
+                              Fill="Black" Data="M30.356323,11.228861C30.39854,11.644495 30.749531,11.968837 31.176053,11.968837 31.403592,11.968837 31.609586,11.87658 31.758696,11.727448L31.75905,11.727058 31.70096,11.779804C31.558373,11.897362 31.375518,11.967991 31.176009,11.967991 30.777865,11.967991 30.445569,11.685477 30.368716,11.310036z M31.176053,10.31977C30.977009,10.31977,30.794415,10.390405,30.651975,10.508055L30.594709,10.560146 30.651879,10.508188C30.794327,10.39063 30.976937,10.320001 31.176009,10.320001 31.20226,10.320001 31.228136,10.321313 31.253604,10.323862L31.328293,10.335073C31.279111,10.325084,31.228299,10.31977,31.176053,10.31977z M25.892107,7.1106887L25.892107,15.165926 29.899073,11.150789z M25.119984,4.3153197C25.380927,4.3086495,25.638856,4.4070906,25.832048,4.5995955L31.71707,10.532789 31.692549,10.512901 31.717033,10.533 31.789036,10.604999C31.916042,10.749999 32.001046,10.934997 32.001046,11.143996 32.001046,11.200871 31.99528,11.256402 31.984299,11.310036L31.97277,11.354848 31.971489,11.360561 31.970495,11.363691 31.963984,11.388996 31.952431,11.420544 31.950032,11.428097 31.946951,11.435508 31.936262,11.464697 31.925791,11.486419 31.923064,11.492979 31.917063,11.504524 31.901542,11.536724 31.893165,11.550503 31.890864,11.55493 31.880819,11.570811 31.860239,11.604663 31.854863,11.611846 31.853709,11.613671 31.835336,11.637938 31.812765,11.668099 31.764158,11.721535 31.764067,11.725819 25.8351,17.667008C25.651017,17.853995 25.401017,17.955011 25.146011,17.955011 25.021011,17.955011 24.894058,17.930016 24.773086,17.881004 24.404066,17.729998 24.166029,17.374977 24.166029,16.977992L24.166029,12.082997 12.084004,12.082997 12.084004,10.35701 24.166029,10.35701 24.166029,5.2916332C24.166029,4.8956251 24.402113,4.5426176 24.768081,4.3906047 24.882141,4.3431009 25.001374,4.3183517 25.119984,4.3153197z M0,0L20.714011,0 20.714011,8.5880108 18.98801,8.5880108 18.98801,1.7270026 1.7270012,1.7270026 1.7270012,20.714025 18.98801,20.714025 18.98801,13.809018 20.714011,13.809018 20.714011,22.440029 0,22.440029z"/>
+                    </Grid>
+                </Button>-->
+                <Button Style="{StaticResource ButtonWin10CommandStyle}" CommandParameter="minimize">
+                    <Path Width="10" Height="10" HorizontalAlignment="Center" VerticalAlignment="Center"
+                              Data="M0,40 L96,40 96,48 0,48 0,40z"
+                              Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                              RenderOptions.EdgeMode="Aliased"
+                              SnapsToDevicePixels="True"
+                              Stretch="Uniform" />
+                    <i:Interaction.Behaviors>
+                        <behaviors:WindowCommandBehavior/>
+                    </i:Interaction.Behaviors>
+                </Button>
+                <Button Style="{StaticResource WindowsCommandsWin10MaximizeButtonStyle}" CommandParameter="maximize">
+                    <i:Interaction.Behaviors>
+                        <behaviors:WindowCommandBehavior/>
+                    </i:Interaction.Behaviors>
+                </Button>
+                <Button Style="{StaticResource ButtonWin10CommandCloseStyle}" CommandParameter="close">
+                    <Grid>
+                        <Line HorizontalAlignment="Center" VerticalAlignment="Center" SnapsToDevicePixels="True" 
+                                  Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                                  X1="0"
+                                  X2="10"
+                                  Y1="0"
+                                  Y2="10" />
+                        <Line HorizontalAlignment="Center" VerticalAlignment="Center" SnapsToDevicePixels="True"
+                                  Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                                  X1="0"
+                                  X2="10"
+                                  Y1="10"
+                                  Y2="0" />
+                    </Grid>
+                    <i:Interaction.Behaviors>
+                        <behaviors:WindowCommandBehavior/>
+                    </i:Interaction.Behaviors>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Border>
 </Window>

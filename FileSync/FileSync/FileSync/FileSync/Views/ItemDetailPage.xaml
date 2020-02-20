@@ -9,8 +9,7 @@
              IsBusy="{Binding IsBusy}">
 
     <StackLayout Padding="15">
-        <Grid HeightRequest="160" BackgroundColor="{StaticResource NavigationPrimary}"
-              Margin="-15,-15,-15,10">
+        <Grid Style="{StaticResource HeaderGrid}">
             <Image Source="{Binding Item.Name, Converter={StaticResource FileNameToImageConverter}}" 
                    Style="{StaticResource LargeImageStyle}"/>
         </Grid>
@@ -18,7 +17,7 @@
         <Label Text="{Binding Item.Name}" d:Text="file.txt" 
                Style="{StaticResource LabelContentStyle}"/>
         <Label Text="Created:" Style="{StaticResource LabelStyle}" Margin="0,15,0,0"/>
-        <Label Text="{Binding Item.CreateDate}" 
+        <Label Text="{Binding Item.CreateDate, StringFormat='{0:yyyy-MM-dd HH:mm}'}" 
                d:Text="2020-01-01 07:15" 
                Style="{StaticResource LabelContentStyle}"/>
         <Label Text="Size:" Style="{StaticResource LabelStyle}" Margin="0,15,0,0"/>

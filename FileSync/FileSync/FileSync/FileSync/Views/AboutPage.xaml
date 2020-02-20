@@ -21,15 +21,13 @@
     </ContentPage.Resources>
 
     <StackLayout Padding="15">
-        <Grid HeightRequest="160" BackgroundColor="{StaticResource NavigationPrimary}"
-              Margin="-15,-15,-15,10">
-            <Image Source="outline_lock_white_36dp.png" 
-                   Style="{StaticResource LargeImageStyle}"/>
+        <Grid Style="{StaticResource HeaderGrid}">
+            <Image Source="FileSync.png" Style="{StaticResource LargeImageStyle}" HeightRequest="70" WidthRequest="70"/>
         </Grid>
         <ScrollView Grid.Row="1">
             <StackLayout Orientation="Vertical" Padding="16,40,16,40" Spacing="10">
-                <Label FontSize="22" Text="FileSync" FontAttributes="Bold"/>
-                <Label Text="0.0.0" TextColor="{StaticResource LightTextColor}"/>
+                <Label FontSize="22" Text="{Binding Path=AppName}" FontAttributes="Bold" d:Text="File Sync"/>
+                <Label Text="{Binding Version}" TextColor="{StaticResource LightTextColor}" d:Text="1.0"/>
 
                 <Label Text="Simple application that can be used to share files from/to mobile device" />
 

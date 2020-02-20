@@ -68,7 +68,11 @@
                     Style="{StaticResource ButtonStyle}"/>
 
 
-            <Label Text="{Binding Title}" Margin="10,50,10,10"/>
+            <Label Text="{Binding Message, Converter={StaticResource NullToVisibilityConverter}}" 
+                   d:Text="Login failed."
+                   Margin="0,6"
+                   TextColor="Red" 
+                   Style="{StaticResource LabelStyle}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

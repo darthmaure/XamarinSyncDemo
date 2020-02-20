@@ -16,6 +16,7 @@
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <converters:FileSizeFormatConverter x:Key="FileSizeFormatConverter"/>
         <converters:FileNameToImageConverter x:Key="FileNameToImageConverter"/>
+        <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
 
 
         <Style x:Key="LargeImageStyle" TargetType="Image">
@@ -53,6 +54,12 @@
         </Style>
         <Style x:Key="LabelContentSecondaryStyle" TargetType="Label" BasedOn="{StaticResource LabelContentStyle}">
             <Setter Property="FontSize" Value="Medium"/>
+        </Style>
+
+        <Style x:Key="HeaderGrid" TargetType="Grid">
+            <Setter Property="BackgroundColor" Value="{StaticResource NavigationPrimary}"/>
+            <Setter Property="HeightRequest" Value="160"/>
+            <Setter Property="Margin" Value="-15,-15,-15,10"/>
         </Style>
     </Application.Resources>
 </Application>

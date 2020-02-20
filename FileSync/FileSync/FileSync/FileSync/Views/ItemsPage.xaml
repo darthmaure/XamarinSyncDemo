@@ -8,8 +8,12 @@
              x:Class="FileSync.Views.ItemsPage"
              Title="{Binding Title}"
              x:Name="BrowseItemsPage"
-             Visual="Material">
-
+             Visual="Material"
+             Shell.NavBarHasShadow="False">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="{Binding Path=Items.Count, StringFormat='{0} file(s)'}"/>
+        <ToolbarItem Text="{Binding Path=TotalSize, Converter={StaticResource FileSizeFormatConverter}}"/>
+    </ContentPage.ToolbarItems>
     <RefreshView IsRefreshing="{Binding IsBusy, Mode=TwoWay}" Command="{Binding LoadItemsCommand}">
         <Grid>
             <CollectionView x:Name="ItemsCollectionView" BackgroundColor="{StaticResource Gray}"
