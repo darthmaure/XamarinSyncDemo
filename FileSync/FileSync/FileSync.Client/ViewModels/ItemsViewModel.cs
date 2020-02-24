@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -38,6 +39,7 @@ namespace FileSync.Client.ViewModels
 			DeleteCommand = new RelayCommand(async p => await OnDeleteItem(), p => !IsBusy && SelectedItem != null);
 			DownloadCommand = new RelayCommand(async p => await OnDownloadItem(), p => !IsBusy && SelectedItem != null);
 			LogoutCommand = new RelayCommand(async p => await OnLogout(), p => !IsBusy);
+			UploadCommand = new RelayCommand(async p => await OnUpload(p), p => !IsBusy);
 		}
 
 		private ObservableCollection<SyncItem> items;
@@ -68,6 +70,7 @@ namespace FileSync.Client.ViewModels
 		public ICommand DownloadCommand { get; }
 		public ICommand DeleteCommand { get; }
 		public ICommand LogoutCommand { get; }
+		public ICommand UploadCommand { get; }
 
 		public override async Task OnNavigated()
 		{
@@ -81,7 +84,7 @@ namespace FileSync.Client.ViewModels
 
 				if (items?.Count() > 0)
 				{
-					Items = new ObservableCollection<SyncItem>(items);
+					Items = new ObservableCollection<SyncItem>(items.OrderByDescending(d => d.CreateDate));
 					TotalSize = Items.Sum(d => d.Length);
 				}
 				else
@@ -153,6 +156,31 @@ namespace FileSync.Client.ViewModels
 			await _loginService.Logout();
 			await _configurationService.ClearAsync();
 			await _navigationService.NavigateLoginAsync();
+		}
+		private async Task OnUpload(object parameter)
+		{
+			if (parameter != null && parameter is IEnumerable<string> files)
+			{
+				IsBusy = true;
+				try
+				{
+					await _syncService.UploadFilesAsync(files, (x, y) => 
+					{
+						var filename = System.IO.Path.GetFileName(files.ElementAt(x));
+						UploadingMessage = $"Uploading file {filename}";
+					});
+				}
+				catch (System.Exception e)
+				{
+					System.Diagnostics.Debug.WriteLine(e);
+				}
+				finally
+				{
+					UploadingMessage = null;
+					IsBusy = false;
+				}
+				await OnNavigated(); //refresh
+			}
 		}
 	}
 }

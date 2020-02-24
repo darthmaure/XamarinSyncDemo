@@ -39,12 +39,17 @@
                 <Button Grid.Column="6" Command="{Binding LogoutCommand}" Style="{StaticResource ButtonCommandStyle}" Content="&#xF3B1;" ToolTip="logout"/>
             </Grid>
 
-            <Border Grid.Row="1" Background="{StaticResource BackgroundBusy}">
+            <Border Grid.Row="1" Background="{StaticResource BackgroundBusy}" AllowDrop="True">
                 <ListBox ItemsSource="{Binding Items}" Margin="0,2"
                          SelectedItem="{Binding SelectedItem}"
                          Style="{StaticResource ListBoxDefaultStyle}"
                          VirtualizingPanel.VirtualizationMode="Recycling"
-                         VirtualizingPanel.IsVirtualizing="True">
+                         VirtualizingPanel.IsVirtualizing="True"
+                         IsHitTestVisible="True"
+                         AllowDrop="True">
+                    <i:Interaction.Behaviors>
+                        <behaviors:DragDropBehavior DropCommand="{Binding Path=UploadCommand}"/>
+                    </i:Interaction.Behaviors>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Border x:Name="root" Background="{StaticResource BackgroundDefault}" Height="60" HorizontalAlignment="Stretch"

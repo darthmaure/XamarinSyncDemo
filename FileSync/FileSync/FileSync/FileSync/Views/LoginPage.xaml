@@ -68,7 +68,8 @@
                     Style="{StaticResource ButtonStyle}"/>
 
 
-            <Label Text="{Binding Message, Converter={StaticResource NullToVisibilityConverter}}" 
+            <Label Text="{Binding Message}" 
+                   IsVisible="{Binding Message, Converter={StaticResource NullToVisibilityConverter}}"
                    d:Text="Login failed."
                    Margin="0,6"
                    TextColor="Red" 

@@ -14,5 +14,13 @@ namespace FileSync.Client.ViewModels
             get => message;
             set => SetProperty(ref message, value);
         }
+
+        private string uploadingMessage;
+
+        public string UploadingMessage
+        {
+            get => uploadingMessage;
+            set => SetProperty(ref uploadingMessage, value);
+        }
     }
 }

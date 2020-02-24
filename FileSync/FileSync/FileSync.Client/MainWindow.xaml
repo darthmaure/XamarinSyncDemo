@@ -11,7 +11,7 @@
         UseLayoutRounding="True"
         WindowStyle="None"
         ResizeMode="CanResize" Background="Transparent"
-        Height="450" Width="500"
+        Height="450" Width="500" AllowDrop="True"
         DataContext="{Binding Shell, Source={StaticResource locator}}">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -61,6 +61,10 @@
                   Style="{StaticResource GridBusyPanel}"
                   Visibility="{Binding Path=Current.IsBusy, Converter={StaticResource BooleanToVisibilityConverter}, TargetNullValue=Collapsed, FallbackValue=Collapsed}">
                 <Control Style="{StaticResource ProgressRingStyle}"/>
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Margin="0,35" Text="{Binding Path=UploadingMessage}"
+                           Visibility="{Binding Path=UploadingMessage, Converter={StaticResource NullToVisibilityConverter}}"
+                           Foreground="{StaticResource ForegroundSelected}"/>
             </Grid>
 
 

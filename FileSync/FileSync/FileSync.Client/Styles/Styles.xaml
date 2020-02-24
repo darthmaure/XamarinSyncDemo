@@ -363,9 +363,10 @@
         </Setter>
     </Style>
     <Style x:Key="ListBoxDefaultStyle" TargetType="ListBox">
-        <Setter Property="SnapsToDevicePixels" Value="False" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="AllowDrop" Value="True"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Background" Value="{StaticResource BackgroundDefault}" />
         <Setter Property="BorderBrush" Value="{StaticResource ForegroundActive}" />
@@ -386,14 +387,14 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            SnapsToDevicePixels="True">
+                            SnapsToDevicePixels="True" AllowDrop="True">
                         <ScrollViewer Padding="{TemplateBinding Padding}"
                                       CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}"
-                                      Focusable="False"
+                                      Focusable="False" AllowDrop="True"
                                       HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                       VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
-                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" AllowDrop="True"/>
                         </ScrollViewer>
                     </Border>
                 </ControlTemplate>
