@@ -14,10 +14,9 @@
         <ToolbarItem Text="{Binding Path=Items.Count, StringFormat='{0} file(s)'}"/>
         <ToolbarItem Text="{Binding Path=TotalSize, Converter={StaticResource FileSizeFormatConverter}}"/>
     </ContentPage.ToolbarItems>
-    <RefreshView IsRefreshing="{Binding IsBusy, Mode=TwoWay}" Command="{Binding LoadItemsCommand}">
+    <RefreshView IsRefreshing="{Binding IsBusy, Mode=OneWay}" Command="{Binding LoadItemsCommand}">
         <Grid>
-            <CollectionView x:Name="ItemsCollectionView" BackgroundColor="{StaticResource Gray}"
-                ItemsSource="{Binding Items}">
+            <CollectionView x:Name="ItemsCollectionView" BackgroundColor="{StaticResource Gray}" ItemsSource="{Binding Items}">
                 <d:CollectionView.ItemsSource>
                     <x:Array Type="{x:Type models:SyncItem}">
                         <models:SyncItem CreateDate="2020-01-01 15:20" Length="1200" Name="Test.txt"/>
@@ -27,7 +26,7 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid BackgroundColor="{StaticResource Gray}" Padding="0,0,0,0">
-                            <Grid Padding="10" HeightRequest="80" BackgroundColor="White" Margin="1,0,1,1">
+                            <Grid Padding="10" HeightRequest="70" BackgroundColor="White" Margin="1,0,1,1">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="1.5*"/>
                                     <RowDefinition/>
@@ -47,15 +46,14 @@
                                        VerticalOptions="Center" HorizontalOptions="Center"/>
                                 <Label Grid.Column="1" Text="{Binding Name}" 
                                        d:Text="{Binding Name}"
-                                       Style="{StaticResource LabelContentStyle}" 
-                                       FontSize="Title" />
+                                       Style="{DynamicResource ListItemTextStyle}" />
                                 <Label Grid.Column="1" Grid.Row="1" 
                                        Text="{Binding Length, Converter={StaticResource FileSizeFormatConverter}}" 
                                        HorizontalOptions="End"
-                                       Style="{StaticResource LabelContentSecondaryStyle}"/>
+                                       Style="{DynamicResource CaptionStyle}"/>
                                 <Label Grid.Column="1" Grid.Row="1" 
                                        Text="{Binding CreateDate, StringFormat='{}{0:yyyy-MM-dd HH:mm:ss}'}" 
-                                       Style="{StaticResource LabelContentSecondaryStyle}"/>
+                                       Style="{DynamicResource CaptionStyle}"/>
                                 <Grid.GestureRecognizers>
                                     <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnItemSelected"></TapGestureRecognizer>
                                 </Grid.GestureRecognizers>

@@ -27,17 +27,18 @@ namespace FileSync.ViewModels
 
         public ItemsViewModel()
         {
-            Title = "All items";
             Items = new ObservableCollection<SyncItem>();
             LoadItemsCommand = new Command(async () => await OnLoadItemsAsync());
 
             _syncService = DependencyService.Get<ISyncService>();
         }
 
-        async Task OnLoadItemsAsync()
+        private async Task OnLoadItemsAsync()
         {
-            IsBusy = true;
+            if (IsBusy)
+                return;
 
+            IsBusy = true;
             try
             {
                 TotalSize = 0;
@@ -58,5 +59,7 @@ namespace FileSync.ViewModels
                 IsBusy = false;
             }
         }
+
+        public override async Task OnAppearing() => await OnLoadItemsAsync();
     }
 }

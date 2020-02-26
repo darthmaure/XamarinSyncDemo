@@ -5,6 +5,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>FileSync.ico</ApplicationIcon>
+    <PackageProjectUrl>https://github.com/darthmaure/XamarinSyncDemo</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>

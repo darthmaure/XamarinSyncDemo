@@ -112,7 +112,6 @@ namespace FileSync.Shared.Services
                             Length = bytes.Length,
                             CreateDate = DateTime.Now.ToUniversalTime()
                         });
-                        await Task.Delay(1000);
                     }
                 }
                 return true;
