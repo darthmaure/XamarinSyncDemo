@@ -25,10 +25,10 @@
                 </d:CollectionView.ItemsSource>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid BackgroundColor="{StaticResource Gray}" Padding="0,0,0,0">
-                            <Grid Padding="10" HeightRequest="70" BackgroundColor="White" Margin="1,0,1,1">
+                        <Grid BackgroundColor="{StaticResource Gray}" Padding="0">
+                            <Grid Padding="10,8" HeightRequest="65" BackgroundColor="White" Margin="1,0,1,1">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="1.5*"/>
+                                    <RowDefinition Height="1.6*"/>
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
@@ -36,26 +36,26 @@
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
 
-                                <Frame CornerRadius="32" HeightRequest="24" WidthRequest="24" 
-                                       Grid.RowSpan="2" Margin="4"
+                                <Frame CornerRadius="30" HeightRequest="20" WidthRequest="20" 
+                                       Grid.RowSpan="2" Margin="6,4"
                                        VerticalOptions="Center" HorizontalOptions="Center"
                                        BackgroundColor="{StaticResource NavigationPrimary}"/>
                                 <Image Source="{Binding Name, Converter={StaticResource FileNameToImageConverter}}" 
                                        Grid.RowSpan="2" Margin="4" 
-                                       HeightRequest="32" WidthRequest="32"
+                                       HeightRequest="28" WidthRequest="28"
                                        VerticalOptions="Center" HorizontalOptions="Center"/>
-                                <Label Grid.Column="1" Text="{Binding Name}" 
+                                <Label Grid.Column="1" Text="{Binding Name}"
                                        d:Text="{Binding Name}"
-                                       Style="{DynamicResource ListItemTextStyle}" />
+                                       Style="{StaticResource LabelListItemPrimary}"/>
                                 <Label Grid.Column="1" Grid.Row="1" 
                                        Text="{Binding Length, Converter={StaticResource FileSizeFormatConverter}}" 
                                        HorizontalOptions="End"
-                                       Style="{DynamicResource CaptionStyle}"/>
+                                       Style="{StaticResource LabelListItemSecondary}"/>
                                 <Label Grid.Column="1" Grid.Row="1" 
                                        Text="{Binding CreateDate, StringFormat='{}{0:yyyy-MM-dd HH:mm:ss}'}" 
-                                       Style="{DynamicResource CaptionStyle}"/>
+                                       Style="{StaticResource LabelListItemSecondary}" />
                                 <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnItemSelected"></TapGestureRecognizer>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnItemSelected"/>
                                 </Grid.GestureRecognizers>
                             </Grid>
                         </Grid>

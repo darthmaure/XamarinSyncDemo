@@ -1,7 +1,6 @@
-﻿using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows.Input;
+using FileSync.Services;
 using FileSync.Shared.Models;
 using FileSync.Shared.Services;
 using Xamarin.Forms;
@@ -10,9 +9,8 @@ namespace FileSync.ViewModels
 {
     public class ItemDetailViewModel : BaseMobileViewModel
     {
-        private readonly ISyncService _syncService;
-        private readonly INavigationService _navigationService;
-        private readonly IToastNotificationService _toastNotificationService;
+        private readonly IDeleteItemService _deleteItemService;
+        private readonly IDownloadItemService _downloadItemService;
 
         public SyncItem Item { get; set; }
         public ICommand DownloadCommand { get; }
@@ -22,9 +20,8 @@ namespace FileSync.ViewModels
         {
             Item = item;
 
-            _syncService = DependencyService.Get<ISyncService>();
-            _navigationService = DependencyService.Get<INavigationService>();
-            _toastNotificationService = DependencyService.Get<IToastNotificationService>();
+            _deleteItemService = DependencyService.Get<IDeleteItemService>();
+            _downloadItemService = DependencyService.Get<IDownloadItemService>();
 
             DownloadCommand = new Command(async () => await DownloadFile());
             DeleteCommand = new Command(async () => await DeleteFile());
@@ -33,45 +30,14 @@ namespace FileSync.ViewModels
         private async Task DownloadFile() 
         {
             IsBusy = true;
-            try
-            {
-                var url = await _syncService.GetDownloadFileUrlAsync(Item.Name);
-                await Xamarin.Essentials.Browser.OpenAsync(url);
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e);
-                _toastNotificationService.ShowToast("Cannot download file");
-            }
-            finally
-            {
-                IsBusy = false;
-            }
+            await _downloadItemService.DownloadItem(Item);
+            IsBusy = false;
         }
         private async Task DeleteFile() 
         {
-            var confirm = await Shell.Current.DisplayAlert("Delete file", $"Do you really want to delete file {Item.Name}?", "OK", "Cancel");
-            if (!confirm) return;
-
             IsBusy = true;
-            try
-            {
-                var result = await _syncService.DeleteFileAsync(Item);
-                _toastNotificationService.ShowToast(result ? $"File deleted: {Item.Name}" : "Cannot delete file");
-
-                if (result)
-                {
-                    await _navigationService.NavigateHomeAsync();
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e);
-            }
-            finally
-            {
-                IsBusy = false;
-            }
+            await _deleteItemService.DeleteItemAsync(Item);
+            IsBusy = false;
         }
     }
 }

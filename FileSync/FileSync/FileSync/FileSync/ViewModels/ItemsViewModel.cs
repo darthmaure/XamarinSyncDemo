@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using FileSync.Services;
 using FileSync.Shared.Models;
 using FileSync.Shared.Services;
 using Xamarin.Forms;
@@ -12,9 +13,13 @@ namespace FileSync.ViewModels
     public class ItemsViewModel : BaseMobileViewModel
     {
         private readonly ISyncService _syncService;
+        private readonly IDeleteItemService _deleteItemService;
+        private readonly IDownloadItemService _downloadItemService;
 
         public ObservableCollection<SyncItem> Items { get; set; }
         public Command LoadItemsCommand { get; set; }
+        public Command TapItemCommand { get; set; }
+        public Command SwipeItemCommand { get; set; }
 
         private long totalSize;
 
@@ -27,10 +32,12 @@ namespace FileSync.ViewModels
 
         public ItemsViewModel()
         {
+            _syncService = DependencyService.Get<ISyncService>();
+            _deleteItemService = DependencyService.Get<IDeleteItemService>();
+            _downloadItemService = DependencyService.Get<IDownloadItemService>();
+
             Items = new ObservableCollection<SyncItem>();
             LoadItemsCommand = new Command(async () => await OnLoadItemsAsync());
-
-            _syncService = DependencyService.Get<ISyncService>();
         }
 
         private async Task OnLoadItemsAsync()

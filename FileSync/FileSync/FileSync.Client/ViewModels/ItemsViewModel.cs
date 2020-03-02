@@ -166,7 +166,7 @@ namespace FileSync.Client.ViewModels
 				{
 					await _syncService.UploadFilesAsync(files, (x, y) => 
 					{
-						var filename = System.IO.Path.GetFileName(files.ElementAt(x));
+						var filename = System.IO.Path.GetFileName(files.ElementAt(x - 1));
 						UploadingMessage = $"Uploading file {filename}";
 					});
 				}

@@ -20,6 +20,8 @@ namespace FileSync
             DependencyService.Register<ILoginService, LoginService>();
             DependencyService.Register<INavigationService, NavigationService>();
             DependencyService.Register<ISyncService, SyncService>();
+            DependencyService.Register<IDeleteItemService, DeleteItemService>();
+            DependencyService.Register<IDownloadItemService, DownloadItemService>();
             DependencyService.Register<ItemsViewModel>();
             DependencyService.Register<LoginViewModel>();
             DependencyService.Register<AboutViewModel>();
