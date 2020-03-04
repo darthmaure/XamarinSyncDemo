@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:models="clr-namespace:FileSync.Shared.Models;assembly=FileSync.Shared"
              mc:Ignorable="d"
              x:Class="FileSync.Views.ItemsPage"
              Title="{Binding Title}"
@@ -11,22 +10,26 @@
              Visual="Material"
              Shell.NavBarHasShadow="False">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="{Binding Path=Items.Count, StringFormat='{0} file(s)'}"/>
+        <ToolbarItem Text="{Binding Path=ItemsCount, StringFormat='{0} file(s)'}"/>
         <ToolbarItem Text="{Binding Path=TotalSize, Converter={StaticResource FileSizeFormatConverter}}"/>
     </ContentPage.ToolbarItems>
     <RefreshView IsRefreshing="{Binding IsBusy, Mode=OneWay}" Command="{Binding LoadItemsCommand}">
         <Grid>
-            <CollectionView x:Name="ItemsCollectionView" BackgroundColor="{StaticResource Gray}" ItemsSource="{Binding Items}">
-                <d:CollectionView.ItemsSource>
-                    <x:Array Type="{x:Type models:SyncItem}">
-                        <models:SyncItem CreateDate="2020-01-01 15:20" Length="1200" Name="Test.txt"/>
-                        <models:SyncItem CreateDate="2020-01-01 15:20" Length="23200" Name="Test2.txt"/>
-                    </x:Array>
-                </d:CollectionView.ItemsSource>
+            <CollectionView x:Name="ItemsCollectionView" 
+                            BackgroundColor="{StaticResource Gray}" 
+                            ItemsSource="{Binding Items}" 
+                            IsGrouped="True">
+                <CollectionView.GroupHeaderTemplate>
+                    <DataTemplate>
+                        <Frame Padding="10,10,10,4" BackgroundColor="Transparent" HasShadow="False">
+                            <Label Text="{Binding Name}" FontSize="Medium" />
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.GroupHeaderTemplate>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid BackgroundColor="{StaticResource Gray}" Padding="0">
-                            <Grid Padding="10,8" HeightRequest="65" BackgroundColor="White" Margin="1,0,1,1">
+                            <Grid Padding="0,8,10,8" HeightRequest="65" BackgroundColor="White" Margin="1,0,1,1">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="1.6*"/>
                                     <RowDefinition/>
@@ -36,14 +39,9 @@
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
 
-                                <Frame CornerRadius="30" HeightRequest="20" WidthRequest="20" 
-                                       Grid.RowSpan="2" Margin="6,4"
-                                       VerticalOptions="Center" HorizontalOptions="Center"
-                                       BackgroundColor="{StaticResource NavigationPrimary}"/>
+                                <Frame Style="{StaticResource ListItemCircle}"/>
                                 <Image Source="{Binding Name, Converter={StaticResource FileNameToImageConverter}}" 
-                                       Grid.RowSpan="2" Margin="4" 
-                                       HeightRequest="28" WidthRequest="28"
-                                       VerticalOptions="Center" HorizontalOptions="Center"/>
+                                       Style="{StaticResource ListItemImage}" />
                                 <Label Grid.Column="1" Text="{Binding Name}"
                                        d:Text="{Binding Name}"
                                        Style="{StaticResource LabelListItemPrimary}"/>

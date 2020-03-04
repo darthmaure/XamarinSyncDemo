@@ -22,6 +22,8 @@
     <item name="windowActionModeOverlay">true</item>
 
     <item name="android:datePickerDialogTheme">@style/AppCompatDialogStyle</item>
+    <!-- Avoid all button text to be CAPITALIZED. -->
+    <item name="android:textAllCaps">false</item>
   </style>
 
   <style name="AppCompatDialogStyle" parent="Theme.AppCompat.Light.Dialog">

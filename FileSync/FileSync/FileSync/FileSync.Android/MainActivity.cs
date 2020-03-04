@@ -12,9 +12,6 @@ using Xamarin.Forms;
 namespace FileSync.Droid
 {
     [Activity(Label = "FileSync", Icon = "@mipmap/ic_fs_main", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    [IntentFilter(new[] { Intent.ActionSend, Intent.ActionSendMultiple },
-        Categories = new[] { Intent.CategoryDefault },
-        DataMimeTypes = new string[] { @"application/octet-stream", @"text/*", @"application/pdf", @"image/*", "application/epub+zip", "audio/*", "video/*" })]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -25,16 +22,10 @@ namespace FileSync.Droid
             base.OnCreate(savedInstanceState);
 
             global::Xamarin.Forms.Forms.SetFlags("CollectionView_Experimental");
-            Xamarin.Essentials.Platform.Init(this, savedInstanceState);
+            global::Xamarin.Forms.Forms.SetFlags("SwipeView_Experimental");
+            global::Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-
-            var isSendingFiles = Intent.Action == Intent.ActionSend || Intent.Action == Intent.ActionSendMultiple;
-            LoadApplication(new App(isSendingFiles));
-
-            if (isSendingFiles) 
-            {
-                MessagingCenter.Send((object)this, ViewModels.UploadViewModel.UploadFileMessageName, (object)Intent);
-            }
+            LoadApplication(new App(false));
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
         {

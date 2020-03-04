@@ -24,12 +24,22 @@
         <Label Text="{Binding Item.Length, Converter={StaticResource FileSizeFormatConverter}}" 
                Style="{StaticResource LabelContentStyle}"/>
 
-        <Button Text="Download" Style="{StaticResource ButtonStyle}" Margin="0,6,0,0"
-                ImageSource="outline_download_white_36dp.png"
-                Command="{Binding DownloadCommand}"/>
-        <Button Text="Delete" Style="{StaticResource ButtonStyle}" Margin="0,6,0,0"
-                ImageSource="outline_delete_white_36dp.png"
-                Command="{Binding DeleteCommand}"/>
+        <Grid VerticalOptions="EndAndExpand" Margin="25,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" 
+                    Text="Download"  BackgroundColor="Transparent"
+                    Style="{StaticResource ImageButtonStyle}"
+                    ImageSource="outline_vertical_align_bottom_black_24dp.png"
+                    Command="{Binding DownloadCommand}"/>
+            <Button Grid.Column="1" 
+                    Text="Delete" 
+                    Style="{StaticResource ImageButtonStyle}"
+                    ImageSource="outline_delete_black_24dp.png"
+                    Command="{Binding DeleteCommand}"/>
+        </Grid>
     </StackLayout>
     
 </ContentPage>

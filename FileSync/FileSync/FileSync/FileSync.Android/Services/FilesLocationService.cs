@@ -13,7 +13,7 @@ namespace FileSync.Droid.Services
     {
         public IList<string> GetActualPathForFiles(object intent, object context)
         {
-            var activity = context as MainActivity;
+            var activity = context as UploadActivity;
             var resolver = activity.ContentResolver;
 
             return ProcessFiles(resolver, intent as Intent);
