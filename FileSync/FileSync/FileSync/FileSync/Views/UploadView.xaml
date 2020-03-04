@@ -5,31 +5,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="FileSync.Views.UploadView">
-    <ContentPage.Resources>
-        <Style x:Key="LabelStyle" TargetType="Label">
-            <Setter Property="FontSize" Value="Large"/>
-            <Setter Property="TextColor" Value="White"/>
-            <Setter Property="Margin" Value="0,20,0,0"/>
-            <Setter Property="VerticalOptions" Value="Start"/>
-            <Setter Property="HorizontalOptions" Value="Start"/>
-        </Style>
-        <Style x:Key="ProgressStyle" TargetType="ProgressBar">
-            <Setter Property="HorizontalOptions" Value="Fill"/>
-            <Setter Property="VerticalOptions" Value="Start"/>
-            <Setter Property="ProgressColor" Value="{StaticResource AccentTetrary}"/>
-        </Style>
-    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout BackgroundColor="{StaticResource NavigationPrimary}" Padding="10,100,10,10">
             <Image Source="outline_arrow_upward_white_48dp.png"
                    Style="{StaticResource LargeImageStyle}"/>
-            <Label Style="{StaticResource LabelStyle}"
+            <Label Style="{StaticResource UploadLabelStyle}"
                    Text="{Binding Progress, StringFormat='Processing file: {0}'}"
                    d:Text="Processing file: 2/3"/>
             <ProgressBar Style="{StaticResource ProgressStyle}"
                          Progress="{Binding FilesCount, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"
                          d:Progress="0.69"/>
-            <Label Style="{StaticResource LabelStyle}"
+            <Label Style="{StaticResource UploadLabelStyle}"
                    Text="Uploading file progress"/>
             <ProgressBar Style="{StaticResource ProgressStyle}"
                          Progress="{Binding CurrentFileProgress, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"
