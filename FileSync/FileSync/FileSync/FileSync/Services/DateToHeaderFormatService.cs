@@ -13,7 +13,7 @@ namespace FileSync.Services
             if (date > DateTime.Today.AddDays(-14)) return "Two weeks ago";
             if (date > DateTime.Today.AddDays(-21)) return "Three weeks ago";
 
-            return date.ToString("ddd, MMM dd");
+            return date.ToString("ddd, MMM d");
         }
     }
 }

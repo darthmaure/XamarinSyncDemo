@@ -28,35 +28,51 @@
                 </CollectionView.GroupHeaderTemplate>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid BackgroundColor="{StaticResource Gray}" Padding="0">
-                            <Grid Padding="0,8,10,8" HeightRequest="65" BackgroundColor="White" Margin="1,0,1,1">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="1.6*"/>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems Mode="Reveal">
+                                    <SwipeItem Text="Download"
+                                               IconImageSource="outline_vertical_align_bottom_black_18dp.png"
+                                               BackgroundColor="{StaticResource Gray}"
+                                               Command="{Binding Source={x:Reference BrowseItemsPage}, Path=BindingContext.DownloadItemCommand}"
+                                               CommandParameter="{Binding .}"/>
+                                    <SwipeItem Text="Delete" IsDestructive="True"
+                                               IconImageSource="outline_delete_black_18dp.png"
+                                               BackgroundColor="{StaticResource Gray}"
+                                               Command="{Binding Source={x:Reference BrowseItemsPage}, Path=BindingContext.DeleteItemCommand}"
+                                               CommandParameter="{Binding .}"/>
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                            <Grid BackgroundColor="{StaticResource Gray}" Padding="0">
+                                <Grid Padding="0,8,10,8" HeightRequest="65" BackgroundColor="White" Margin="1,0,1,1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1.6*"/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
 
-                                <Frame Style="{StaticResource ListItemCircle}"/>
-                                <Image Source="{Binding Name, Converter={StaticResource FileNameToImageConverter}}" 
-                                       Style="{StaticResource ListItemImage}" />
-                                <Label Grid.Column="1" Text="{Binding Name}"
-                                       d:Text="{Binding Name}"
-                                       Style="{StaticResource LabelListItemPrimary}"/>
-                                <Label Grid.Column="1" Grid.Row="1" 
-                                       Text="{Binding Length, Converter={StaticResource FileSizeFormatConverter}}" 
-                                       HorizontalOptions="End"
-                                       Style="{StaticResource LabelListItemSecondary}"/>
-                                <Label Grid.Column="1" Grid.Row="1" 
-                                       Text="{Binding CreateDate, StringFormat='{}{0:yyyy-MM-dd HH:mm:ss}'}" 
-                                       Style="{StaticResource LabelListItemSecondary}" />
-                                <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnItemSelected"/>
-                                </Grid.GestureRecognizers>
+                                    <Frame Style="{StaticResource ListItemCircle}"/>
+                                    <Image Source="{Binding Name, Converter={StaticResource FileNameToImageConverter}}" 
+                                           Style="{StaticResource ListItemImage}" />
+                                    <Label Grid.Column="1" Text="{Binding Name}"
+                                           d:Text="{Binding Name}"
+                                           Style="{StaticResource LabelListItemPrimary}"/>
+                                    <Label Grid.Column="1" Grid.Row="1" 
+                                           Text="{Binding Length, Converter={StaticResource FileSizeFormatConverter}}" 
+                                           HorizontalOptions="End"
+                                           Style="{StaticResource LabelListItemSecondary}"/>
+                                    <Label Grid.Column="1" Grid.Row="1" 
+                                           Text="{Binding CreateDate, StringFormat='{}{0:yyyy-MM-dd HH:mm:ss}'}" 
+                                           Style="{StaticResource LabelListItemSecondary}" />
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnItemSelected"/>
+                                    </Grid.GestureRecognizers>
+                                </Grid>
                             </Grid>
-                        </Grid>
+                        </SwipeView>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>

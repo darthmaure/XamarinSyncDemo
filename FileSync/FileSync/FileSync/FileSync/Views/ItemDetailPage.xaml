@@ -32,13 +32,13 @@
             <Button Grid.Column="0" 
                     Text="Download"  BackgroundColor="Transparent"
                     Style="{StaticResource ImageButtonStyle}"
-                    ImageSource="outline_vertical_align_bottom_black_24dp.png"
-                    Command="{Binding DownloadCommand}"/>
+                    ImageSource="outline_vertical_align_bottom_black_18dp.png"
+                    Command="{Binding DownloadItemCommand}"/>
             <Button Grid.Column="1" 
                     Text="Delete" 
                     Style="{StaticResource ImageButtonStyle}"
-                    ImageSource="outline_delete_black_24dp.png"
-                    Command="{Binding DeleteCommand}"/>
+                    ImageSource="outline_delete_black_18dp.png"
+                    Command="{Binding DeleteItemCommand}"/>
         </Grid>
     </StackLayout>
     

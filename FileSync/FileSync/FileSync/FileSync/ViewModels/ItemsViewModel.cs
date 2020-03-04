@@ -3,24 +3,19 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using FileSync.Services;
 using FileSync.Shared.Models;
 using FileSync.Shared.Services;
 using Xamarin.Forms;
 
 namespace FileSync.ViewModels
 {
-    public class ItemsViewModel : BaseMobileViewModel
+    public class ItemsViewModel : BaseItemViewModel
     {
         private readonly ISyncService _syncService;
-        private readonly IDeleteItemService _deleteItemService;
-        private readonly IDownloadItemService _downloadItemService;
         private readonly IDateToHeaderFormatService _dateToHeaderFormatService;
 
         public ObservableCollection<SyncItemGroup> Items { get; set; }
         public Command LoadItemsCommand { get; set; }
-        public Command TapItemCommand { get; set; }
-        public Command SwipeItemCommand { get; set; }
 
         private long totalSize;
 
@@ -38,16 +33,15 @@ namespace FileSync.ViewModels
             set => SetProperty(ref itemsCount, value);
         }
 
-
-        public ItemsViewModel()
+        public ItemsViewModel() : base()
         {
             _syncService = DependencyService.Get<ISyncService>();
-            _deleteItemService = DependencyService.Get<IDeleteItemService>();
-            _downloadItemService = DependencyService.Get<IDownloadItemService>();
             _dateToHeaderFormatService = DependencyService.Get<IDateToHeaderFormatService>();
 
             Items = new ObservableCollection<SyncItemGroup>();
             LoadItemsCommand = new Command(async () => await OnLoadItemsAsync());
+            DownloadItemCommand = new Command<SyncItem>(async item => await OnDownloadItem(item));
+            DeleteItemCommand = new Command<SyncItem>(async item => await OnDeleteItem(item));
         }
 
         private async Task OnLoadItemsAsync()
