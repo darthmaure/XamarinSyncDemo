@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     xmlns:vm="clr-namespace:FileSync.Client.ViewModels"
-                    xmlns:behaviors="clr-namespace:FileSync.Client.Behaviors">
+                    xmlns:behaviors="clr-namespace:FileSync.Client.Behaviors"
+                    xmlns:resources="clr-namespace:FileSync.Client.Resources">
     <DataTemplate DataType="{x:Type vm:ItemsViewModel}">
         <Grid>
             <Grid.RowDefinitions>
@@ -21,23 +22,47 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-
                 <Border Margin="3" Height="40" Width="40" Background="{StaticResource AccentColor}" VerticalAlignment="Center" HorizontalAlignment="Center" CornerRadius="8">
                     <Image Source="pack://application:,,,/Resources/FileSync.png" ClipToBounds="True" VerticalAlignment="Center" Height="30" Width="30"/>
                 </Border>
 
                 <TextBlock Grid.Column="1" FontSize="15" VerticalAlignment="Center" Margin="6,0">
-                    <Run Text="File(s): "/>
-                    <Run Text="{Binding Path=Items.Count,Mode=OneWay}"/>
-                    <Run Text=" ("/>
-                    <Run Text="{Binding Path=TotalSize, Mode=OneWay, Converter={StaticResource FileSizeFormatConverter}}"/>
-                    <Run Text=")"/>
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0}: {1} ({2})">
+                            <Binding Source="{x:Static resources:AppResources.FilesInfo}"/>
+                            <Binding Path="Items.Count" Mode="OneWay"/>
+                            <Binding Path="TotalSize" Mode="OneWay" Converter="{StaticResource FileSizeFormatConverter}"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
                 </TextBlock>
-                <Button Grid.Column="3" Command="{Binding DownloadCommand}" Style="{StaticResource ButtonCommandStyle}" Content="&#xE896;" ToolTip="download"/>
-                <Button Grid.Column="4" Command="{Binding DeleteCommand}" Style="{StaticResource ButtonCommandStyle}" Content="&#xE74D;" ToolTip="delete"/>
-                <Button Grid.Column="5" Command="{Binding RefreshCommand}" Style="{StaticResource ButtonCommandStyle}" Content="&#xE72C;" ToolTip="refresh"/>
-                <Button Grid.Column="6" Command="{Binding LogoutCommand}" Style="{StaticResource ButtonCommandStyle}" Content="&#xF3B1;" ToolTip="logout"/>
+                <Button Grid.Column="4" Command="{Binding RefreshCommand}" Style="{StaticResource ButtonCommandStyle}" Content="&#xE72C;" ToolTip="{x:Static resources:AppResources.ToolTipRefresh}"/>
+                <Button Grid.Column="5" Command="{Binding LogoutCommand}" Style="{StaticResource ButtonCommandStyle}" Content="&#xF3B1;" ToolTip="{x:Static resources:AppResources.ToolTipLogout}"/>
+                <Button Grid.Column="6" Style="{StaticResource ButtonCommandStyle}" Content="&#xE712;" ToolTip="{x:Static resources:AppResources.ToolTipMore}" x:Name="buttonShowMore"/>
             </Grid>
+            <Popup IsOpen="{Binding ElementName=buttonShowMore, Path=IsPressed,Mode=OneWay}" 
+                   Height="60" Width="260" VerticalOffset="6"
+                   PlacementTarget="{Binding ElementName=buttonShowMore}" Placement="Bottom">
+                <Border BorderBrush="{StaticResource AccentColor}" BorderThickness="1" SnapsToDevicePixels="True" Background="{StaticResource BackgroundDefault}">
+                    <Grid Margin="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Ellipse x:Name="ellipse" Margin="4" Width="42" Height="42" Grid.RowSpan="2" Fill="{StaticResource AccentColor}"/>
+                        <TextBlock Text="&#xE77B;" FontSize="16" Grid.RowSpan="2" 
+                                   FontWeight="Light" FontFamily="Segoe MDL2 Assets"
+                                   VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   Foreground="{StaticResource ForegroundSelected}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource TextBlockLabelStyle}" VerticalAlignment="Center" Text="{Binding Path=UserName}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource TextBlockLabelStyle}" VerticalAlignment="Center" Text="{Binding Path=CurrentBucket}"/>
+                    </Grid>
+                </Border>
+            </Popup>
 
             <Border Grid.Row="1" Background="{StaticResource BackgroundBusy}" AllowDrop="True">
                 <ListBox ItemsSource="{Binding Items}" Margin="0,2"
@@ -52,7 +77,7 @@
                     </i:Interaction.Behaviors>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Border x:Name="root" Background="{StaticResource BackgroundDefault}" Height="60" HorizontalAlignment="Stretch"
+                            <Border x:Name="root" Background="{StaticResource BackgroundDefault}" Height="68" HorizontalAlignment="Stretch"
                                     BorderBrush="{StaticResource BackgroundBusy}" BorderThickness="0,0,0,0.8">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -62,16 +87,24 @@
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"/>
                                         <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
 
-                                    <Ellipse Margin="4" Width="40" Height="40" Grid.RowSpan="2"/>
+                                    <Ellipse x:Name="ellipse" Margin="4" Width="42" Height="42" Grid.RowSpan="3" Fill="{StaticResource AccentColor}"/>
                                     <Image Source="{Binding Path=Name, Converter={StaticResource FileNameToImageConverter}}" Width="30" Height="30" 
                                            VerticalAlignment="Center" HorizontalAlignment="Center"
-                                           Grid.RowSpan="2" Margin="4"/>
+                                           Grid.RowSpan="3" Margin="4"/>
 
                                     <TextBlock x:Name="header" Text="{Binding Path=Name}" FontSize="16" Grid.Column="1" FontWeight="Light" Margin="0,4,0,0"/>
-                                    <TextBlock x:Name="date" Text="{Binding Path=CreateDate, StringFormat='{}{0:yyyy-MM-dd HH:mm}'}" Grid.Column="1" Grid.Row="1" FontSize="12.5" Margin="0,4"/>
-                                    <TextBlock x:Name="size" Text="{Binding Path=Length, Converter={StaticResource FileSizeFormatConverter}}" Grid.Column="1" Grid.Row="1" FontSize="12.5" HorizontalAlignment="Right" Margin="0,4"/>
+                                    <TextBlock x:Name="date" Text="{Binding Path=CreateDate, StringFormat='{}{0:yyyy-MM-dd HH:mm}'}" Grid.Column="1" Grid.Row="1" FontSize="12.5" Margin="0,2,0,0"/>
+                                    <TextBlock x:Name="size" Text="{Binding Path=Length, Converter={StaticResource FileSizeFormatConverter}}" Grid.Column="1" Grid.Row="2" FontSize="12.5"  Margin="0,0,0,2"/>
+
+                                    <StackPanel x:Name="buttonsPanel" Visibility="Collapsed" 
+                                                Orientation="Horizontal" Grid.Column="1" Grid.RowSpan="3"
+                                                HorizontalAlignment="Right" VerticalAlignment="Center">
+                                        <Button Command="{Binding DownloadCommand}" Style="{StaticResource ButtonItemCommandStyle}" Content="&#xE896;" ToolTip="{x:Static resources:AppResources.ToolTipDownload}"/>
+                                        <Button Command="{Binding DeleteCommand}" Style="{StaticResource ButtonItemCommandStyle}" Content="&#xE74D;" ToolTip="{x:Static resources:AppResources.ToolTipDelete}"/>
+                                    </StackPanel>
                                 </Grid>
                             </Border>
                             <DataTemplate.Triggers>
@@ -81,9 +114,11 @@
                                     <Setter TargetName="date" Property="Foreground" Value="{StaticResource ForegroundSelected}"/>
                                     <Setter TargetName="size" Property="Foreground" Value="{StaticResource ForegroundSelected}"/>
                                     <Setter TargetName="root" Property="Background" Value="{StaticResource AccentColor}"/>
+                                    <Setter TargetName="buttonsPanel" Property="Visibility" Value="Visible"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding IsMouseOver, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
                                     <Setter TargetName="root" Property="Background" Value="{StaticResource AccentColor2}"/>
+                                    <Setter TargetName="ellipse" Property="Fill" Value="{StaticResource AccentColor2}"/>
                                 </DataTrigger>
                             </DataTemplate.Triggers>
                         </DataTemplate>

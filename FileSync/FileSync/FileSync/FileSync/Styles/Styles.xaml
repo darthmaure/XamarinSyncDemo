@@ -9,7 +9,7 @@
     <!--COLORS-->
     <Color x:Key="NavigationPrimary">#106687</Color>
     <Color x:Key="AccentTetrary">#00366C</Color>
-    <Color x:Key="Gray">#BeBeBe</Color>
+    <Color x:Key="Gray">#C5C5C5</Color>
     
 
     <!--LABELS-->
@@ -82,8 +82,8 @@
         <Setter Property="IsTabStop" Value="False"/>
     </Style>
     <Style x:Key="ListItemImage" TargetType="Image">
-        <Setter Property="HeightRequest" Value="28" />
-        <Setter Property="WidthRequest" Value="28"/>
+        <Setter Property="HeightRequest" Value="24" />
+        <Setter Property="WidthRequest" Value="24"/>
         <Setter Property="Margin" Value="4"/>
         <Setter Property="VerticalOptions" Value="Center"/>
         <Setter Property="HorizontalOptions" Value="Center"/>
@@ -100,13 +100,13 @@
     </Style>
     <Style x:Key="ListItemCircle" TargetType="Frame">
         <Setter Property="HasShadow" Value="False"/>
-        <Setter Property="CornerRadius" Value="30"/>
-        <Setter Property="HeightRequest" Value="20"/>
-        <Setter Property="WidthRequest" Value="20"/>
+        <Setter Property="CornerRadius" Value="26"/>
+        <Setter Property="HeightRequest" Value="18"/>
+        <Setter Property="WidthRequest" Value="18"/>
         <Setter Property="BackgroundColor" Value="{StaticResource NavigationPrimary}"/>
         <Setter Property="VerticalOptions" Value="Center"/>
         <Setter Property="HorizontalOptions" Value="Center"/>
-        <Setter Property="Margin" Value="6,4"/>
+        <Setter Property="Margin" Value="6,10"/>
         <Setter Property="Grid.RowSpan" Value="2"/>
     </Style>
 </ResourceDictionary>

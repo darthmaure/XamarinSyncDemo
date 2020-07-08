@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using FileSync.Resources;
 using FileSync.Shared.Models;
 using FileSync.Shared.Services;
 using Xamarin.Forms;
@@ -28,7 +29,7 @@ namespace FileSync.Services
             catch (Exception e)
             {
                 Debug.WriteLine(e);
-                _toastNotificationService.ShowToast("Cannot download file");
+                _toastNotificationService.ShowToast(AppResources.ToastCannotDownloadFile);
             }
         }
     }

@@ -189,6 +189,38 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+    <Style x:Key="ButtonItemCommandStyle" TargetType="Button" BasedOn="{StaticResource ButtonCommandStyle}">
+        <Setter Property="Foreground" Value="{StaticResource ForegroundSelected}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}" BorderThickness="0">
+                        <TextBlock x:Name="text" Text="{TemplateBinding Content}" 
+                                   Foreground="{TemplateBinding Foreground}" Background="Transparent"
+                                   FontFamily="{TemplateBinding FontFamily}" 
+                                   FontSize="{TemplateBinding FontSize}" 
+                                   FontWeight="{TemplateBinding FontWeight}"
+                                   TextOptions.TextFormattingMode="Ideal"
+                                   TextAlignment="Center"
+                                   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="1,0"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{StaticResource ForegroundGray}"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource ForegroundSelected}"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource ForegroundSelected}"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 
     <!--PANELS-->
     <Style x:Key="GridBusyPanel" TargetType="Grid">
@@ -210,6 +242,23 @@
         <Setter Property="Margin" Value="6,0"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="DockPanel.Dock" Value="Left"/>
+    </Style>
+    <Style x:Key="TitleTextStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="22.5"/>
+        <Setter Property="FontWeight" Value="Light"/>
+        <Setter Property="Foreground" Value="{StaticResource ForegroundSelected}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="2,0,2,2"/>
+        <Style.Triggers>
+            <EventTrigger RoutedEvent="Loaded">
+                <BeginStoryboard>
+                    <Storyboard Storyboard.TargetProperty="Opacity">
+                        <DoubleAnimation Duration="0:0:1.2" From="1" To="0.73" RepeatBehavior="Forever" 
+                                                 AutoReverse="True"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Style.Triggers>
     </Style>
 
     <!--TEXTBOXES-->

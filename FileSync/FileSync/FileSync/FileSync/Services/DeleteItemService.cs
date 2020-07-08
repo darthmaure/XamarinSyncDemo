@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using FileSync.Resources;
 using FileSync.Shared.Models;
 using FileSync.Shared.Services;
 using Xamarin.Forms;
@@ -23,13 +24,16 @@ namespace FileSync.Services
 
         public async Task DeleteItemAsync(SyncItem item, bool navigateHomeOnSuccess = true)
         {
-            var confirm = await Shell.Current.DisplayAlert("Delete file", $"Are you sure you want to delete file {item.Name}?", "OK", "Cancel");
+            var confirm = await Shell.Current.DisplayAlert(
+                AppResources.AlertTitleFileDelete, 
+                string.Format(AppResources.AlertTextFileDelete, item.Name), 
+                AppResources.LabelOK, AppResources.LabelCancel);
             if (!confirm) return;
 
             try
             {
                 var result = await _syncService.DeleteFileAsync(item);
-                _toastNotificationService.ShowToast(result ? $"File deleted: {item.Name}" : "Cannot delete file");
+                _toastNotificationService.ShowToast(result ? string.Format(AppResources.ToastFileDeleted, item.Name) : AppResources.ToastFileDeletionError);
 
                 if (result && navigateHomeOnSuccess)
                 {

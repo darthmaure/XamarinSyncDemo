@@ -66,9 +66,10 @@ namespace FileSync.Client.Converters
                 case ".docx":
                 case ".rtf":
                 case ".odt":
+                case ".log":
                     return "outline_insert_drive_file_white_36dp.png";
                 default:
-                    return "outline_cloud_upload_black_18dp.png";
+                    return "outline_insert_drive_file_white_36dp.png";
             }
         }
     }

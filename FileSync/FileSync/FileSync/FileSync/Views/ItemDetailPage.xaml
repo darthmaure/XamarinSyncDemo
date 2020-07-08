@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:res="clr-namespace:FileSync.Resources"
              mc:Ignorable="d"
              Shell.NavBarHasShadow="False"
              x:Class="FileSync.Views.ItemDetailPage" 
@@ -13,14 +14,14 @@
             <Image Source="{Binding Item.Name, Converter={StaticResource FileNameToImageConverter}}" 
                    Style="{StaticResource LargeImageStyle}"/>
         </Grid>
-        <Label Text="Name:" Style="{StaticResource LabelStyle}" Margin="0,15,0,0"/>
+        <Label Text="{x:Static res:AppResources.LabelNameTitle}" Style="{StaticResource LabelStyle}" Margin="0,15,0,0"/>
         <Label Text="{Binding Item.Name}" d:Text="file.txt" 
                Style="{StaticResource LabelContentStyle}"/>
-        <Label Text="Created:" Style="{StaticResource LabelStyle}" Margin="0,15,0,0"/>
+        <Label Text="{x:Static res:AppResources.LabelCreatedTitle}" Style="{StaticResource LabelStyle}" Margin="0,15,0,0"/>
         <Label Text="{Binding Item.CreateDate, StringFormat='{0:yyyy-MM-dd HH:mm}'}" 
                d:Text="2020-01-01 07:15" 
                Style="{StaticResource LabelContentStyle}"/>
-        <Label Text="Size:" Style="{StaticResource LabelStyle}" Margin="0,15,0,0"/>
+        <Label Text="{x:Static res:AppResources.LabelSizeTitle}" Style="{StaticResource LabelStyle}" Margin="0,15,0,0"/>
         <Label Text="{Binding Item.Length, Converter={StaticResource FileSizeFormatConverter}}" 
                Style="{StaticResource LabelContentStyle}"/>
 
@@ -30,12 +31,12 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" 
-                    Text="Download"  BackgroundColor="Transparent"
+                    Text="{x:Static res:AppResources.LabelDownload}"  BackgroundColor="Transparent"
                     Style="{StaticResource ImageButtonStyle}"
                     ImageSource="outline_vertical_align_bottom_black_18dp.png"
                     Command="{Binding DownloadItemCommand}"/>
             <Button Grid.Column="1" 
-                    Text="Delete" 
+                    Text="{x:Static res:AppResources.LabelDelete}" 
                     Style="{StaticResource ImageButtonStyle}"
                     ImageSource="outline_delete_black_18dp.png"
                     Command="{Binding DeleteItemCommand}"/>

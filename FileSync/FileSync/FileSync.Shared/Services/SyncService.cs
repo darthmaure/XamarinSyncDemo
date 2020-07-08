@@ -15,9 +15,14 @@ namespace FileSync.Shared.Services
     public class SyncService : ISyncService
     {
         private readonly IConfigurationService _configurationService;
+        private readonly ILogger _logger;
         private const string _root = "RootDirectory";
 
-        public SyncService(IConfigurationService configurationService) => _configurationService = configurationService;
+        public SyncService(IConfigurationService configurationService, ILogger logger)
+        {
+            _configurationService = configurationService;
+            _logger = logger;
+        }
         public SyncService() => _configurationService = SimpleServiceLocator.Default.Get<IConfigurationService>();
 
         public async Task<bool> DeleteFileAsync(SyncItem item)
@@ -38,6 +43,7 @@ namespace FileSync.Shared.Services
             catch (Exception e)
             {
                 Debug.WriteLine(e);
+                _logger?.Log($"{nameof(SyncService)} - {e}");
             }
             return false;
         }
@@ -56,6 +62,7 @@ namespace FileSync.Shared.Services
             catch (Exception e)
             {
                 Debug.WriteLine(e);
+                _logger?.Log($"{nameof(SyncService)} - {e}");
             }
             return null;
         }
@@ -74,6 +81,7 @@ namespace FileSync.Shared.Services
             catch (Exception e)
             {
                 Debug.WriteLine(e);
+                _logger?.Log($"{nameof(SyncService)} - {e}");
             }
             return new List<SyncItem>();
         }
@@ -119,6 +127,7 @@ namespace FileSync.Shared.Services
             catch (Exception e)
             {
                 Debug.WriteLine(e);
+                _logger?.Log($"{nameof(SyncService)} - {e}");
             }
             return false;
         }

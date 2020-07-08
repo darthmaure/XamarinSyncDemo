@@ -3,6 +3,7 @@
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:d="http://xamarin.com/schemas/2014/forms/design"
        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+       xmlns:res="clr-namespace:FileSync.Resources"
        mc:Ignorable="d"
        xmlns:local="clr-namespace:FileSync.Views"
        Title="FileSync"
@@ -32,10 +33,10 @@
         <ShellContent ContentTemplate="{DataTemplate local:LoginPage}"/>
     </ShellItem>
     <TabBar Route="main">
-        <Tab Title="Browse" Icon="outline_list_alt_white_24dp.png">
+        <Tab Title="{x:Static res:AppResources.LabelBrowse}" Icon="outline_list_alt_white_24dp.png">
             <ShellContent ContentTemplate="{DataTemplate local:ItemsPage}" />
         </Tab>
-        <Tab Title="About" Icon="outline_info_white_24dp.png">
+        <Tab Title="{x:Static res:AppResources.LabelAbout}" Icon="outline_info_white_24dp.png">
             <ShellContent ContentTemplate="{DataTemplate local:AboutPage}" />
         </Tab>
     </TabBar>

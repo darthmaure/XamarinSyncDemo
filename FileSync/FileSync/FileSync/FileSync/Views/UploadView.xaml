@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:res="clr-namespace:FileSync.Resources"
              mc:Ignorable="d"
              x:Class="FileSync.Views.UploadView">
     <ContentPage.Content>
@@ -10,13 +11,13 @@
             <Image Source="outline_arrow_upward_white_48dp.png"
                    Style="{StaticResource LargeImageStyle}"/>
             <Label Style="{StaticResource UploadLabelStyle}"
-                   Text="{Binding Progress, StringFormat='Processing file: {0}'}"
+                   Text="{Binding Progress, Converter={StaticResource StringFormatConverter}, ConverterParameter='LabelProcessingFileFormat'}"
                    d:Text="Processing file: 2/3"/>
             <ProgressBar Style="{StaticResource ProgressStyle}"
                          Progress="{Binding FilesCount, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"
                          d:Progress="0.69"/>
             <Label Style="{StaticResource UploadLabelStyle}"
-                   Text="Uploading file progress"/>
+                   Text="{x:Static res:AppResources.LabelUploadingFileTitle}"/>
             <ProgressBar Style="{StaticResource ProgressStyle}"
                          Progress="{Binding CurrentFileProgress, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"
                          d:Progress="0.29"/>

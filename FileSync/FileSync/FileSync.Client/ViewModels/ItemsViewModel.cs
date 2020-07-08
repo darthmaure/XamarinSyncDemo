@@ -7,6 +7,7 @@ using FileSync.Client.Helpers;
 using FileSync.Client.Services;
 using FileSync.Shared.Models;
 using FileSync.Shared.Services;
+using Resource = FileSync.Client.Resources.AppResources;
 
 namespace FileSync.Client.ViewModels
 {
@@ -18,15 +19,16 @@ namespace FileSync.Client.ViewModels
 		private readonly ILoginService _loginService;
 		private readonly INavigationService _navigationService;
 		private readonly IConfigurationService _configurationService;
+        private readonly ILogger _logger;
 
-
-		public ItemsViewModel(
+        public ItemsViewModel(
 			ISyncService syncService, 
 			IDownloadService downloadService, 
 			IDialogService dialogService, 
 			ILoginService loginService, 
 			INavigationService navigationService, 
-			IConfigurationService configurationService)
+			IConfigurationService configurationService,
+			ILogger logger)
 		{
 			_syncService = syncService;
 			_downloadService = downloadService;
@@ -34,8 +36,9 @@ namespace FileSync.Client.ViewModels
 			_loginService = loginService;
 			_navigationService = navigationService;
 			_configurationService = configurationService;
+            _logger = logger;
 
-			RefreshCommand = new RelayCommand(async p => await OnNavigated(), p => !IsBusy);
+            RefreshCommand = new RelayCommand(async p => await OnNavigated(), p => !IsBusy);
 			DeleteCommand = new RelayCommand(async p => await OnDeleteItem(), p => !IsBusy && SelectedItem != null);
 			DownloadCommand = new RelayCommand(async p => await OnDownloadItem(), p => !IsBusy && SelectedItem != null);
 			LogoutCommand = new RelayCommand(async p => await OnLogout(), p => !IsBusy);
@@ -66,6 +69,22 @@ namespace FileSync.Client.ViewModels
 			set => SetProperty(ref totalSize, value);
 		}
 
+		private string userName;
+
+		public string UserName
+		{
+			get => userName;
+			set => SetProperty(ref userName, value);
+		}
+
+		private string currentBucket;
+
+		public string CurrentBucket
+		{
+			get => currentBucket;
+			set => SetProperty(ref currentBucket, value);
+		}
+
 		public ICommand RefreshCommand { get; }
 		public ICommand DownloadCommand { get; }
 		public ICommand DeleteCommand { get; }
@@ -79,48 +98,55 @@ namespace FileSync.Client.ViewModels
 			TotalSize = default;
 			Message = null;
 			try
-			{
-				var items = await _syncService.GetFilesAsync();
+            {
+                await LoadConfigInfo();
 
-				if (items?.Count() > 0)
-				{
-					Items = new ObservableCollection<SyncItem>(items.OrderByDescending(d => d.CreateDate));
-					TotalSize = Items.Sum(d => d.Length);
-				}
-				else
-				{
-					Message = "No items.";
-				}
-			}
-			catch (System.Exception e)
+                var items = await _syncService.GetFilesAsync();
+
+                if (items?.Count() > 0)
+                {
+                    Items = new ObservableCollection<SyncItem>(items.OrderByDescending(d => d.CreateDate));
+                    TotalSize = Items.Sum(d => d.Length);
+                }
+                else
+                {
+                    Message = Resource.NoItemsMessage;
+                }
+            }
+            catch (System.Exception e)
 			{
-				System.Diagnostics.Debug.WriteLine(e);
-				Message = "Failed to show items";
+				_logger.Log(e.ToString());
+				Message = Resource.FailedToLoadItemsMessage;
 			}
 			finally
 			{
 				IsBusy = false;
 			}
 		}
-
-		private async Task OnDeleteItem() 
+        private async Task LoadConfigInfo()
+        {
+            var config = await _configurationService.LoadAsync();
+            CurrentBucket = config.Bucket;
+            UserName = config.Email;
+        }
+        private async Task OnDeleteItem() 
 		{
 			if (SelectedItem == null) return;
 			Message = null;
 
-			if (!_dialogService.ShowConfirmationDialog("Delete file", $"Are you sure you want to delete file {SelectedItem.Name}?")) return;
+			if (!_dialogService.ShowConfirmationDialog(Resource.FileDeleteDialogTitle, string.Format(Resource.FileDeleteDialogMessage, SelectedItem.Name))) return;
 			IsBusy = true;
 			try
 			{
 				var result = await _syncService.DeleteFileAsync(SelectedItem);
-				Message = result ? $"File deleted {SelectedItem.Name}" : "Cannot delete file";
+				Message = result ? string.Format(Resource.FileDeletedMessage, SelectedItem.Name) : Resource.CannotDeleteFileMessage;
 
 				await OnNavigated();
 			}
 			catch (System.Exception e)
 			{
-				System.Diagnostics.Debug.WriteLine(e);
-				Message = "Cannot delete file";
+				_logger.Log(e.ToString());
+				Message = Resource.CannotDeleteFileMessage;
 			}
 			finally
 			{
@@ -144,7 +170,7 @@ namespace FileSync.Client.ViewModels
 			catch (System.Exception e)
 			{
 				System.Diagnostics.Debug.WriteLine(e);
-				Message = "Cannot download file";
+				Message = Resource.CannotDonwloadFileMessage;
 			}
 			finally
 			{
@@ -167,12 +193,12 @@ namespace FileSync.Client.ViewModels
 					await _syncService.UploadFilesAsync(files, (x, y) => 
 					{
 						var filename = System.IO.Path.GetFileName(files.ElementAt(x - 1));
-						UploadingMessage = $"Uploading file {filename}";
+						UploadingMessage = string.Format(Resource.UploadFilesMessage, filename);
 					});
 				}
 				catch (System.Exception e)
 				{
-					System.Diagnostics.Debug.WriteLine(e);
+					_logger.Log($"Error uploading file.{System.Environment.NewLine}{e}");
 				}
 				finally
 				{

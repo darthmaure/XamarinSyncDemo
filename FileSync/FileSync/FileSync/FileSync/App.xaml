@@ -18,6 +18,7 @@
             <converters:FileSizeFormatConverter x:Key="FileSizeFormatConverter"/>
             <converters:FileNameToImageConverter x:Key="FileNameToImageConverter"/>
             <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+            <converters:StringFormatConverter x:Key="StringFormatConverter"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
