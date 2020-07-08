@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using FileSync.Resources;
 using FileSync.Services;
 using FileSync.Shared.Services;
 using Xamarin.Forms;
@@ -67,12 +68,12 @@ namespace FileSync.ViewModels
 
 				await Task.Delay(400); //simple workaround for locked files in android filesystem
 				var result = await _syncService.UploadFilesAsync(filesToSend, UpdateProgress);
-				_notificationService.Notify("Files Upload", result ? "Files uploaded successfully" : "Cannot upload files");
-				_toastNotificationService.ShowToast(result ? "Files uploaded successfully" : "Cannot upload files");
+				_notificationService.Notify(AppResources.AlertTitleFilesUpload, result ? AppResources.AlertTextFilesUploaded : AppResources.ToastCannotUploadFiles);
+				_toastNotificationService.ShowToast(result ? AppResources.AlertTextFilesUploaded : AppResources.ToastCannotUploadFiles);
 			}
 			catch (System.Exception e)
 			{
-				_notificationService.Notify("Files Upload", "Failed to upload files");
+				_notificationService.Notify(AppResources.AlertTitleFilesUpload, AppResources.AlertTextFilesUploadError);
 				Debug.WriteLine(e.ToString());
 			}
 			finally

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:res="clr-namespace:FileSync.Resources"
              mc:Ignorable="d"
              x:Class="FileSync.Views.ItemsPage"
              Title="{Binding Title}"
@@ -10,7 +11,7 @@
              Visual="Material"
              Shell.NavBarHasShadow="False">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="{Binding Path=ItemsCount, StringFormat='{0} file(s)'}"/>
+        <ToolbarItem Text="{Binding Path=ItemsCount, Converter={StaticResource StringFormatConverter}, ConverterParameter='LabelFilesCount'}"/>
         <ToolbarItem Text="{Binding Path=TotalSize, Converter={StaticResource FileSizeFormatConverter}}"/>
     </ContentPage.ToolbarItems>
     <RefreshView IsRefreshing="{Binding IsBusy, Mode=OneWay}" Command="{Binding LoadItemsCommand}">
@@ -31,12 +32,12 @@
                         <SwipeView>
                             <SwipeView.RightItems>
                                 <SwipeItems Mode="Reveal">
-                                    <SwipeItem Text="Download"
+                                    <SwipeItem Text="{x:Static res:AppResources.LabelDownload}"
                                                IconImageSource="outline_vertical_align_bottom_black_18dp.png"
                                                BackgroundColor="{StaticResource Gray}"
                                                Command="{Binding Source={x:Reference BrowseItemsPage}, Path=BindingContext.DownloadItemCommand}"
                                                CommandParameter="{Binding .}"/>
-                                    <SwipeItem Text="Delete" IsDestructive="True"
+                                    <SwipeItem Text="{x:Static res:AppResources.LabelDelete}" IsDestructive="True"
                                                IconImageSource="outline_delete_black_18dp.png"
                                                BackgroundColor="{StaticResource Gray}"
                                                Command="{Binding Source={x:Reference BrowseItemsPage}, Path=BindingContext.DeleteItemCommand}"
@@ -50,7 +51,7 @@
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="60"/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
 
@@ -76,7 +77,7 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <Label Text="No items" 
+            <Label Text="{x:Static res:AppResources.LabelNoItems}" 
                    VerticalOptions="Center" HorizontalOptions="Center"
                    IsVisible="{Binding Items, Converter={StaticResource CountToVisibilityConverter}, ConverterParameter=1}"/>
         </Grid>

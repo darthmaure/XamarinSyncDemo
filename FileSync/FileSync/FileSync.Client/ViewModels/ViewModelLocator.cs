@@ -9,6 +9,7 @@ namespace FileSync.Client.ViewModels
         public ViewModelLocator()
         {
             var builder = new ContainerBuilder();
+            builder.RegisterType<Logger>().As<ILogger>();
             builder.RegisterType<LoginService>().As<ILoginService>();
             builder.RegisterType<RemoteLoginService>().As<IRemoteLoginService>();
             builder.RegisterType<ConfigurationService>().As<IConfigurationService>();
@@ -20,6 +21,7 @@ namespace FileSync.Client.ViewModels
             builder.RegisterType<LoginViewModel>().SingleInstance();
             builder.RegisterType<ItemsViewModel>().SingleInstance();
             builder.RegisterType<ShellViewModel>().SingleInstance();
+            builder.RegisterType<UploadViewModel>().SingleInstance();
 
             Container = builder.Build();
         }
@@ -27,5 +29,7 @@ namespace FileSync.Client.ViewModels
         public static IContainer Container { get; set; }
 
         public ShellViewModel Shell => Container.Resolve<ShellViewModel>();
+
+        public UploadViewModel Upload => Container.Resolve<UploadViewModel>();
     }
 }

@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:essentials="clr-namespace:Xamarin.Essentials;assembly=Xamarin.Essentials"
+             xmlns:res="clr-namespace:FileSync.Resources"
              mc:Ignorable="d"
              x:Class="FileSync.Views.AboutPage"
              xmlns:vm="clr-namespace:FileSync.ViewModels"
@@ -29,10 +29,10 @@
                 <Label FontSize="22" Text="{Binding Path=AppName}" FontAttributes="Bold" d:Text="File Sync"/>
                 <Label Text="{Binding Version}" TextColor="{StaticResource LightTextColor}" d:Text="1.0"/>
 
-                <Label Text="Simple application that can be used to share files from/to mobile device" />
+                <Label Text="{x:Static res:AppResources.LabelAppDescription}" />
 
                 <Button Margin="0,10,0,0" 
-                        Text="Logout"
+                        Text="{x:Static res:AppResources.LabelLogout}"
                         Command="{Binding LogoutCommand}"
                         Style="{StaticResource ButtonStyle}" />
             </StackLayout>

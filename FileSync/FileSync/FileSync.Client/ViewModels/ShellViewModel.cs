@@ -6,7 +6,7 @@ using FileSync.Shared.ViewModels;
 
 namespace FileSync.Client.ViewModels
 {
-	public class ShellViewModel : BaseViewModel
+    public class ShellViewModel : BaseViewModel
     {
 		private readonly ILoginService _loginService;
 		private readonly INavigationService _navigationService;
@@ -37,7 +37,6 @@ namespace FileSync.Client.ViewModels
 
 		public ICommand LoadedCommand { get; }
 		
-
 		private async Task OnLoaded() 
 		{
 			var isLoggedIn = await _loginService.IsLoggedIn();
@@ -50,6 +49,5 @@ namespace FileSync.Client.ViewModels
 				await _navigationService.NavigateLoginAsync();
 			}
 		}
-
 	}
 }

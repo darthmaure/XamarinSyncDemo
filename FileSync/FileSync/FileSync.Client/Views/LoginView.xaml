@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     xmlns:vm="clr-namespace:FileSync.Client.ViewModels"
-                    xmlns:behaviors="clr-namespace:FileSync.Client.Behaviors">
+                    xmlns:behaviors="clr-namespace:FileSync.Client.Behaviors"
+                    xmlns:resources="clr-namespace:FileSync.Client.Resources">
     <DataTemplate DataType="{x:Type vm:LoginViewModel}">
         <Grid Margin="10,0">
             <Grid.RowDefinitions>
@@ -28,30 +29,42 @@
                 <Image Source="pack://application:,,,/Resources/FileSync.png" 
                        ClipToBounds="True" VerticalAlignment="Center" Height="40" Width="40"/>
             </Border>
-            <TextBlock Grid.Row="2" Text="Email" Style="{StaticResource TextBlockLabelStyle}"/>
+            <TextBlock Grid.Row="2" Text="{x:Static resources:AppResources.LabelEmail}" Style="{StaticResource TextBlockLabelStyle}"/>
             <TextBox Grid.Row="3" 
                      Text="{Binding Path=Email, Mode=TwoWay}" 
                      Style="{StaticResource TextBoxEntryStyle}"/>
-            <TextBlock Grid.Row="4" Text="Password" Style="{StaticResource TextBlockLabelStyle}"/>
+            <TextBlock Grid.Row="4" Text="{x:Static resources:AppResources.LabelPassword}" Style="{StaticResource TextBlockLabelStyle}"/>
             <PasswordBox Grid.Row="5" Style="{StaticResource PasswordBoxEntryStyle}">
                 <i:Interaction.Behaviors>
                     <behaviors:PasswordBoxBehavior PasswordText="{Binding Path=Password, Mode=TwoWay}" />
                 </i:Interaction.Behaviors>
             </PasswordBox>
-            <TextBlock Grid.Row="6" Text="API Key" Style="{StaticResource TextBlockLabelStyle}"/>
+            <TextBlock Grid.Row="6" Text="{x:Static resources:AppResources.LabelApiKey}" Style="{StaticResource TextBlockLabelStyle}"/>
             <TextBox Grid.Row="7" 
                      Text="{Binding Path=ApiKey, Mode=TwoWay}" 
                      Style="{StaticResource TextBoxEntryStyle}"/>
-            <TextBlock Grid.Row="8" Text="Bucket" Style="{StaticResource TextBlockLabelStyle}"/>
-            <TextBox Grid.Row="9" 
-                     Text="{Binding Path=Bucket, Mode=TwoWay}" 
-                     Style="{StaticResource TextBoxEntryStyle}"/>
-            <TextBlock Grid.Row="10" Text="Database" Style="{StaticResource TextBlockLabelStyle}"/>
-            <TextBox Grid.Row="11" 
-                     Text="{Binding Path=Database, Mode=TwoWay}" 
-                     Style="{StaticResource TextBoxEntryStyle}"/>
+            <TextBlock Grid.Row="8" Text="{x:Static resources:AppResources.LabelBucket}" Style="{StaticResource TextBlockLabelStyle}"/>
+            <Grid Grid.Row="9">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="110"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Text="{Binding Path=Bucket, Mode=TwoWay}" 
+                        Style="{StaticResource TextBoxEntryStyle}"/>
+                <TextBlock Grid.Column="1" Text=".appspot.com" Margin="1,4,6,0" FontSize="14" HorizontalAlignment="Right"/>
+            </Grid>
+            <TextBlock Grid.Row="10" Text="{x:Static resources:AppResources.LabelDatabase}" Style="{StaticResource TextBlockLabelStyle}"/>
+            <Grid Grid.Row="11">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="110"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Text="{Binding Path=Database, Mode=TwoWay}" 
+                         Style="{StaticResource TextBoxEntryStyle}"/>
+                <TextBlock Grid.Column="1" Text=".firebaseio.com" Margin="1,4,6,0" FontSize="14" HorizontalAlignment="Right"/>
+            </Grid>
 
-            <Button Grid.Row="12" Content="Login" 
+            <Button Grid.Row="12" Content="{x:Static resources:AppResources.ButtonLogin}" 
                     Command="{Binding Path=LoginCommand}"
                     Style="{StaticResource ButtonDefault}"/>
             <TextBlock Text="{Binding Path=Message}" 

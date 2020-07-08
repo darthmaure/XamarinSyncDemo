@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using FileSync.Resources;
 using FileSync.Shared.Models;
 using FileSync.Shared.Services;
 using Xamarin.Forms;
@@ -98,7 +99,7 @@ namespace FileSync.ViewModels
                 }
                 else
                 {
-                    Message = "Login failed.";
+                    Message = AppResources.MessageLoginFailed;
                 }
             }
             catch { }

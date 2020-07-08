@@ -3,6 +3,7 @@ using System.Windows.Input;
 using FileSync.Client.Helpers;
 using FileSync.Shared.Models;
 using FileSync.Shared.Services;
+using Resource = FileSync.Client.Resources.AppResources;
 
 namespace FileSync.Client.ViewModels
 {
@@ -96,7 +97,7 @@ namespace FileSync.Client.ViewModels
                 }
                 else
                 {
-                    Message = "Login failed.";
+                    Message = Resource.LoginFailedMessage;
                 }
             }
             catch { }

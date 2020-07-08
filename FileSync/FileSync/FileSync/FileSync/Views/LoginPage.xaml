@@ -4,6 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:FileSync.ViewModels"
+             xmlns:res="clr-namespace:FileSync.Resources"
              mc:Ignorable="d"
              x:Class="FileSync.Views.LoginPage">
     <ContentPage.Content>
@@ -12,7 +13,7 @@
                 <Image Style="{StaticResource LargeImageStyle}" 
                        Source="outline_lock_white_36dp.png"/>
             </Frame>
-            <Label Text="Email:" Style="{StaticResource LabelStyle}"/>
+            <Label Text="{x:Static res:AppResources.LabelEmailTitle}" Style="{StaticResource LabelStyle}"/>
             <Frame Style="{StaticResource EntryFrameStyle}">
                 <Entry HorizontalOptions="FillAndExpand"
                        Keyboard="Email"
@@ -21,7 +22,7 @@
                        Visual="Custom">
                 </Entry>
             </Frame>
-            <Label Text="Password:" Style="{StaticResource LabelStyle}"/>
+            <Label Text="{x:Static res:AppResources.LabelPasswordTitle}" Style="{StaticResource LabelStyle}"/>
             <Frame Style="{StaticResource EntryFrameStyle}">
                 <Entry HorizontalOptions="FillAndExpand"
                        IsPassword="True"
@@ -30,7 +31,7 @@
                        Visual="Custom">
                 </Entry>
             </Frame>
-            <Label Text="API Key:" Style="{StaticResource LabelStyle}"/>
+            <Label Text="{x:Static res:AppResources.LabelApiKeyTitle}" Style="{StaticResource LabelStyle}"/>
             <Frame Style="{StaticResource EntryFrameStyle}">
                 <Entry HorizontalOptions="FillAndExpand"
                        Keyboard="Default"
@@ -39,7 +40,7 @@
                        Visual="Custom">
                 </Entry>
             </Frame>
-            <Label Text="Storage Bucket:" Style="{StaticResource LabelStyle}"/>
+            <Label Text="{x:Static res:AppResources.LabelStorageBucketTitle}" Style="{StaticResource LabelStyle}"/>
             <Frame Style="{StaticResource EntryFrameStyle}">
                 <StackLayout Orientation="Horizontal">
                     <Entry HorizontalOptions="FillAndExpand"
@@ -51,7 +52,7 @@
                     <Label Text=".appspot.com" VerticalOptions="Center"/>
                 </StackLayout>
             </Frame>
-            <Label Text="Database url:" Style="{StaticResource LabelStyle}"/>
+            <Label Text="{x:Static res:AppResources.LabelDatabaseUrlTitle}" Style="{StaticResource LabelStyle}"/>
             <Frame Style="{StaticResource EntryFrameStyle}">
                 <StackLayout Orientation="Horizontal">
                     <Entry HorizontalOptions="FillAndExpand"
@@ -63,14 +64,14 @@
                     <Label Text=".firebaseio.com" VerticalOptions="Center"/>
                 </StackLayout>
             </Frame>
-            <Button Text="Login" 
+            <Button Text="{x:Static res:AppResources.LabelLogin}" 
                     Command="{Binding LoginCommand}"
                     Style="{StaticResource ButtonStyle}"/>
 
 
             <Label Text="{Binding Message}" 
                    IsVisible="{Binding Message, Converter={StaticResource NullToVisibilityConverter}}"
-                   d:Text="Login failed."
+                   d:Text="{x:Static res:AppResources.LabelLoginFailed}"
                    Margin="0,6"
                    TextColor="Red" 
                    Style="{StaticResource LabelStyle}"/>
