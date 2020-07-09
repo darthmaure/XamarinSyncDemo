@@ -22,14 +22,14 @@ namespace FileSync.Client.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class AppResources {
+    public class AppResources_pl_PL {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal AppResources() {
+        internal AppResources_pl_PL() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace FileSync.Client.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("FileSync.Client.Resources.AppResources", typeof(AppResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("FileSync.Client.Resources.AppResources_pl_PL", typeof(AppResources_pl_PL).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -70,7 +70,7 @@ namespace FileSync.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Login.
+        ///   Looks up a localized string similar to Zaloguj.
         /// </summary>
         public static string ButtonLogin {
             get {
@@ -79,7 +79,7 @@ namespace FileSync.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot delete file.
+        ///   Looks up a localized string similar to Nie można usunąć pliku..
         /// </summary>
         public static string CannotDeleteFileMessage {
             get {
@@ -88,7 +88,7 @@ namespace FileSync.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot download file..
+        ///   Looks up a localized string similar to Nie można pobrać pliku..
         /// </summary>
         public static string CannotDonwloadFileMessage {
             get {
@@ -97,7 +97,7 @@ namespace FileSync.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Loading items failed. See log file for furher details..
+        ///   Looks up a localized string similar to Pobieranie elementów nie powiodło się. Więcej informacji znajduje się w pliku log..
         /// </summary>
         public static string FailedToLoadItemsMessage {
             get {
@@ -106,7 +106,7 @@ namespace FileSync.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to delete file {0}.
+        ///   Looks up a localized string similar to Czy na pewno checz usunąć plik {0}?.
         /// </summary>
         public static string FileDeleteDialogMessage {
             get {
@@ -115,7 +115,7 @@ namespace FileSync.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete file.
+        ///   Looks up a localized string similar to Usuń plik.
         /// </summary>
         public static string FileDeleteDialogTitle {
             get {
@@ -124,7 +124,7 @@ namespace FileSync.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to File deleted {0}.
+        ///   Looks up a localized string similar to Plik usunięty: {0}.
         /// </summary>
         public static string FileDeletedMessage {
             get {
@@ -133,7 +133,7 @@ namespace FileSync.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to File(s).
+        ///   Looks up a localized string similar to Plik(i).
         /// </summary>
         public static string FilesInfo {
             get {
@@ -142,7 +142,7 @@ namespace FileSync.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to File(s).
+        ///   Looks up a localized string similar to Plik(i).
         /// </summary>
         public static string FilesListInfoMessage {
             get {
@@ -151,7 +151,7 @@ namespace FileSync.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to File(s) uploaded successfully.
+        ///   Looks up a localized string similar to Pliki przesłane prawidłowo.
         /// </summary>
         public static string FilesUploadedMessage {
             get {
@@ -196,7 +196,7 @@ namespace FileSync.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password.
+        ///   Looks up a localized string similar to Hasło.
         /// </summary>
         public static string LabelPassword {
             get {
@@ -205,7 +205,7 @@ namespace FileSync.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Login failed..
+        ///   Looks up a localized string similar to Logowanie nieprawidłowe..
         /// </summary>
         public static string LoginFailedMessage {
             get {
@@ -214,7 +214,7 @@ namespace FileSync.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No items..
+        ///   Looks up a localized string similar to Brak elementów..
         /// </summary>
         public static string NoItemsMessage {
             get {
@@ -232,7 +232,7 @@ namespace FileSync.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Send files with FileSync.
+        ///   Looks up a localized string similar to Wyśłij pliki z FileSync.
         /// </summary>
         public static string ShellMenuText {
             get {
@@ -241,7 +241,7 @@ namespace FileSync.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Close.
+        ///   Looks up a localized string similar to Zamknij.
         /// </summary>
         public static string ToolTipClose {
             get {
@@ -250,7 +250,7 @@ namespace FileSync.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to delete.
+        ///   Looks up a localized string similar to usuń.
         /// </summary>
         public static string ToolTipDelete {
             get {
@@ -259,7 +259,7 @@ namespace FileSync.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to download.
+        ///   Looks up a localized string similar to pobierz.
         /// </summary>
         public static string ToolTipDownload {
             get {
@@ -268,7 +268,7 @@ namespace FileSync.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to logout.
+        ///   Looks up a localized string similar to wyloguj.
         /// </summary>
         public static string ToolTipLogout {
             get {
@@ -277,7 +277,7 @@ namespace FileSync.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Maximize.
+        ///   Looks up a localized string similar to Maksymalizuj.
         /// </summary>
         public static string ToolTipMaximize {
             get {
@@ -286,7 +286,7 @@ namespace FileSync.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Minimize.
+        ///   Looks up a localized string similar to Minimalizuj.
         /// </summary>
         public static string ToolTipMinimize {
             get {
@@ -295,7 +295,7 @@ namespace FileSync.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to more info.
+        ///   Looks up a localized string similar to więcej informacji.
         /// </summary>
         public static string ToolTipMore {
             get {
@@ -304,7 +304,7 @@ namespace FileSync.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to refresh.
+        ///   Looks up a localized string similar to odśwież.
         /// </summary>
         public static string ToolTipRefresh {
             get {
@@ -313,7 +313,7 @@ namespace FileSync.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload failed..
+        ///   Looks up a localized string similar to Nie udało się przesłać plików..
         /// </summary>
         public static string UploadFailedMessage {
             get {
@@ -322,7 +322,7 @@ namespace FileSync.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Uploading file: {0}.
+        ///   Looks up a localized string similar to Przetwarzanie pliku: {0}.
         /// </summary>
         public static string UploadFilesMessage {
             get {
@@ -331,7 +331,7 @@ namespace FileSync.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User not logged in..
+        ///   Looks up a localized string similar to Użytkownik nie jest zalogowany..
         /// </summary>
         public static string UserNotLoggedInMessage {
             get {

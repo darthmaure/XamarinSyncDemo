@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using FileSync.Client.Services;
 using Microsoft.Win32;
 using Resource = FileSync.Client.Resources.AppResources;
@@ -16,18 +17,18 @@ namespace FileSync.Client.Helpers
                 var shellKeyName = Resource.ShellKeyName;
                 var menuText = Resource.ShellMenuText;
                 var menuCommand = string.Format("\"{0}\" \"%1\"", GetExecutableFullName());
-                var regPath = string.Format(@"*\shell\{0}", shellKeyName);
+                var regPath = string.Format(@"SOFTWARE\\Classes\\*\shell\{0}", shellKeyName);
 
                 if (string.IsNullOrEmpty(arg))
                 {
                     logger.Log("registering");
 
-                    using (RegistryKey key = Registry.ClassesRoot.CreateSubKey(regPath))
+                    using (RegistryKey key = Registry.LocalMachine.CreateSubKey(regPath))
                     {
                         key.SetValue(null, menuText);
                     }
 
-                    using (RegistryKey key = Registry.ClassesRoot.CreateSubKey(string.Format(@"{0}\command", regPath)))
+                    using (RegistryKey key = Registry.LocalMachine.CreateSubKey(string.Format(@"{0}\command", regPath)))
                     {
                         key.SetValue(null, menuCommand);
                     }

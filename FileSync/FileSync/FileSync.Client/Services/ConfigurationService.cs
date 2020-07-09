@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Reflection;
 using System.Threading.Tasks;
 using FileSync.Shared.Models;
 using FileSync.Shared.Services;
@@ -23,12 +24,14 @@ namespace FileSync.Client.Services
 
         public async Task<Configuration> LoadAsync()
         {
-            if (!File.Exists(ConfigFileName))
+            var configFilePath = GetConfigFilePath();
+
+            if (!File.Exists(configFilePath))
             {
                 await SaveAsync(new Configuration { }).ConfigureAwait(true);
             }
 
-            var content = File.ReadAllText(ConfigFileName);
+            var content = File.ReadAllText(configFilePath);
             //TODO: add encryption
             return JsonConvert.DeserializeObject<Configuration>(content);
         }
@@ -37,10 +40,17 @@ namespace FileSync.Client.Services
         {
             await Task.Run(() => 
             {
+                var configFilePath = GetConfigFilePath();
                 var content = JsonConvert.SerializeObject(configuration);
                 //TODO: encrypt
-                File.WriteAllText(ConfigFileName, content);
+                File.WriteAllText(configFilePath, content);
             });
+        }
+
+        private string GetConfigFilePath()
+        {
+            var location = Assembly.GetExecutingAssembly().Location;
+            return Path.Combine(Path.GetDirectoryName(location), ConfigFileName);
         }
     }
 }

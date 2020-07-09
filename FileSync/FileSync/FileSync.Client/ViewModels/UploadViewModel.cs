@@ -2,34 +2,31 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
-using FileSync.Client.Helpers;
+using FileSync.Client.Services;
 using FileSync.Shared.Services;
-using FileSync.Shared.ViewModels;
 using Resource = FileSync.Client.Resources.AppResources;
 
 
 namespace FileSync.Client.ViewModels
 {
-    public class UploadViewModel : BaseViewModel
+    public class UploadViewModel : BaseMainViewModel
     {
         private readonly ISyncService _syncService;
-        private readonly ILoginService _loginService;
+        private readonly IToastNotificationService _toastNotificationService;
         private readonly ILogger _logger;
 
         public UploadViewModel(
-            ISyncService syncService, 
             ILoginService loginService,
-            ILogger logger)
+            INotificationManager notificationManager,
+            ISyncService syncService, 
+            IToastNotificationService toastNotificationService,
+            ILogger logger) : base(loginService, notificationManager)
         {
             _syncService = syncService;
-            _loginService = loginService;
+            _toastNotificationService = toastNotificationService;
             _logger = logger;
-
-            LoadedCommand = new RelayCommand(async p => await OnLoaded(), p => true);
         }
 
-        public ICommand LoadedCommand { get; }
 
         private string uploadingMessage;
 
@@ -39,15 +36,16 @@ namespace FileSync.Client.ViewModels
             set => SetProperty(ref uploadingMessage, value);
         }
 
-        private async Task OnLoaded()
+        protected override async Task OnLoaded()
         {
             try
             {
-                var isLoggedIn = await _loginService.IsLoggedIn();
+                _notificationManager.CreateNotificationArea();
 
+                var isLoggedIn = await _loginService.IsLoggedIn();
                 if (!isLoggedIn)
                 {
-                    //todo: show toast
+                    _toastNotificationService.ShowToast(Resource.UserNotLoggedInMessage, true);
                 }
                 else
                 {
@@ -58,15 +56,17 @@ namespace FileSync.Client.ViewModels
                         var filename = System.IO.Path.GetFileName(files.ElementAt(x - 1));
                         UploadingMessage = string.Format(Resource.UploadFilesMessage, filename);
                     });
+                    _toastNotificationService.ShowToast(Resource.FilesUploadedMessage);
                 }
             }
             catch (Exception e)
             {
                 _logger.Log($"{e}");
+                _toastNotificationService.ShowToast(Resource.UploadFailedMessage, true);
             }
             finally
             {
-                await Task.Delay(1000);
+                await Task.Delay(2000);
                 UploadingMessage = null;
                 Application.Current.Shutdown();
                 _logger.Log($"{GetType().Name} - Close");

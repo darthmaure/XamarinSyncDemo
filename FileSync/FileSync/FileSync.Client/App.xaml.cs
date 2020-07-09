@@ -14,9 +14,13 @@ namespace FileSync.Client
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
+            DispatcherUnhandledException += (o, exc) => new Logger().Log($"Unhandled exception: {exc}");
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler((o, exc) => new Logger().Log($"Unhandled exception: {exc}"));
+
             try
             {
-                
+
                 if (e.Args.Length > 0 && System.IO.File.Exists(e.Args[0]))
                 {
                     StartupUri = new Uri("UploadWindow.xaml", UriKind.RelativeOrAbsolute);

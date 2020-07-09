@@ -121,34 +121,34 @@
     <value>FileSync</value>
   </data>
   <data name="ButtonLogin" xml:space="preserve">
-    <value>Login</value>
+    <value>Zaloguj</value>
   </data>
   <data name="CannotDeleteFileMessage" xml:space="preserve">
-    <value>Cannot delete file</value>
+    <value>Nie można usunąć pliku.</value>
   </data>
   <data name="CannotDonwloadFileMessage" xml:space="preserve">
-    <value>Cannot download file.</value>
+    <value>Nie można pobrać pliku.</value>
   </data>
   <data name="FailedToLoadItemsMessage" xml:space="preserve">
-    <value>Loading items failed. See log file for furher details.</value>
+    <value>Pobieranie elementów nie powiodło się. Więcej informacji znajduje się w pliku log.</value>
   </data>
   <data name="FileDeleteDialogMessage" xml:space="preserve">
-    <value>Are you sure you want to delete file {0}</value>
+    <value>Czy na pewno checz usunąć plik {0}?</value>
   </data>
   <data name="FileDeleteDialogTitle" xml:space="preserve">
-    <value>Delete file</value>
+    <value>Usuń plik</value>
   </data>
   <data name="FileDeletedMessage" xml:space="preserve">
-    <value>File deleted {0}</value>
+    <value>Plik usunięty: {0}</value>
   </data>
   <data name="FilesInfo" xml:space="preserve">
-    <value>File(s)</value>
+    <value>Plik(i)</value>
   </data>
   <data name="FilesListInfoMessage" xml:space="preserve">
-    <value>File(s)</value>
+    <value>Plik(i)</value>
   </data>
   <data name="FilesUploadedMessage" xml:space="preserve">
-    <value>File(s) uploaded successfully</value>
+    <value>Pliki przesłane prawidłowo</value>
   </data>
   <data name="LabelApiKey" xml:space="preserve">
     <value>API Key</value>
@@ -163,51 +163,51 @@
     <value>Email</value>
   </data>
   <data name="LabelPassword" xml:space="preserve">
-    <value>Password</value>
+    <value>Hasło</value>
   </data>
   <data name="LoginFailedMessage" xml:space="preserve">
-    <value>Login failed.</value>
+    <value>Logowanie nieprawidłowe.</value>
   </data>
   <data name="NoItemsMessage" xml:space="preserve">
-    <value>No items.</value>
+    <value>Brak elementów.</value>
   </data>
   <data name="ShellKeyName" xml:space="preserve">
     <value>FileSyncShellContextMenu</value>
   </data>
   <data name="ShellMenuText" xml:space="preserve">
-    <value>Send files with FileSync</value>
+    <value>Wyśłij pliki z FileSync</value>
   </data>
   <data name="ToolTipClose" xml:space="preserve">
-    <value>Close</value>
+    <value>Zamknij</value>
   </data>
   <data name="ToolTipDelete" xml:space="preserve">
-    <value>delete</value>
+    <value>usuń</value>
   </data>
   <data name="ToolTipDownload" xml:space="preserve">
-    <value>download</value>
+    <value>pobierz</value>
   </data>
   <data name="ToolTipLogout" xml:space="preserve">
-    <value>logout</value>
+    <value>wyloguj</value>
   </data>
   <data name="ToolTipMaximize" xml:space="preserve">
-    <value>Maximize</value>
+    <value>Maksymalizuj</value>
   </data>
   <data name="ToolTipMinimize" xml:space="preserve">
-    <value>Minimize</value>
+    <value>Minimalizuj</value>
   </data>
   <data name="ToolTipMore" xml:space="preserve">
-    <value>more info</value>
+    <value>więcej informacji</value>
   </data>
   <data name="ToolTipRefresh" xml:space="preserve">
-    <value>refresh</value>
+    <value>odśwież</value>
   </data>
   <data name="UploadFailedMessage" xml:space="preserve">
-    <value>Upload failed.</value>
+    <value>Nie udało się przesłać plików.</value>
   </data>
   <data name="UploadFilesMessage" xml:space="preserve">
-    <value>Uploading file: {0}</value>
+    <value>Przetwarzanie pliku: {0}</value>
   </data>
   <data name="UserNotLoggedInMessage" xml:space="preserve">
-    <value>User not logged in.</value>
+    <value>Użytkownik nie jest zalogowany.</value>
   </data>
 </root>

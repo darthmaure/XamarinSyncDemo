@@ -7,11 +7,13 @@ namespace FileSync.Client.Services
     {
         private readonly IConfigurationService _configurationService;
         private readonly IRemoteLoginService _remoteLoginService;
+        private readonly ILogger _logger;
 
-        public LoginService(IConfigurationService configurationService, IRemoteLoginService remoteLoginService)
+        public LoginService(IConfigurationService configurationService, IRemoteLoginService remoteLoginService, ILogger logger)
         {
             _configurationService = configurationService;
             _remoteLoginService = remoteLoginService;
+            _logger = logger;
         }
 
         public async Task<bool> IsLoggedIn()
@@ -23,6 +25,7 @@ namespace FileSync.Client.Services
             }
             catch (System.Exception e)
             {
+                _logger.Log($"{nameof(LoginService)} - {e}");
                 System.Diagnostics.Debug.WriteLine(e);
                 return false;
             }

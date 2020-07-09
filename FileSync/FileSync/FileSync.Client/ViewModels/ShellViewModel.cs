@@ -1,22 +1,19 @@
 ﻿using System.Threading.Tasks;
-using System.Windows.Input;
-using FileSync.Client.Helpers;
+using FileSync.Client.Services;
 using FileSync.Shared.Services;
-using FileSync.Shared.ViewModels;
 
 namespace FileSync.Client.ViewModels
 {
-    public class ShellViewModel : BaseViewModel
-    {
-		private readonly ILoginService _loginService;
+    public class ShellViewModel : BaseMainViewModel
+	{
 		private readonly INavigationService _navigationService;
 
-		public ShellViewModel(ILoginService loginService, INavigationService navigationService)
+		public ShellViewModel(
+			ILoginService loginService, 
+			INotificationManager notificationManager, 
+			INavigationService navigationService) : base(loginService, notificationManager)
 		{
-			_loginService = loginService;
 			_navigationService = navigationService;
-
-			LoadedCommand = new RelayCommand(async p => await OnLoaded(), p => true);
 		}
 
 		private BaseClientViewModel current;
@@ -35,10 +32,10 @@ namespace FileSync.Client.ViewModels
 			set => SetProperty(ref isLoggedIn, value);
 		}
 
-		public ICommand LoadedCommand { get; }
-		
-		private async Task OnLoaded() 
+		protected override async Task OnLoaded()
 		{
+			_notificationManager.CreateNotificationArea();
+
 			var isLoggedIn = await _loginService.IsLoggedIn();
 			if (isLoggedIn)
 			{

@@ -33,6 +33,7 @@
   <ItemGroup>
     <PackageReference Include="Autofac" Version="5.2.0" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.19" />
+    <PackageReference Include="Notifications.Wpf.Updated" Version="0.1.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,17 +45,26 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Resources\AppResources.Designer.cs">
+    <Compile Update="Resources\AppResources - Copy.Designer.cs">
+      <DependentUpon>AppResources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>AppResources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\AppResources.pl.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AppResources.pl.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Resources\AppResources.pl.resx">
+      <LastGenOutput>AppResources.pl.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\AppResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
+      <LastGenOutput>AppResources_pl_PL.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

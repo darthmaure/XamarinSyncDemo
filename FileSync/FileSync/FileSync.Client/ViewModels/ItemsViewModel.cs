@@ -19,33 +19,36 @@ namespace FileSync.Client.ViewModels
 		private readonly ILoginService _loginService;
 		private readonly INavigationService _navigationService;
 		private readonly IConfigurationService _configurationService;
+		private readonly IToastNotificationService _toastNotificationService;
         private readonly ILogger _logger;
 
         public ItemsViewModel(
-			ISyncService syncService, 
-			IDownloadService downloadService, 
-			IDialogService dialogService, 
-			ILoginService loginService, 
-			INavigationService navigationService, 
-			IConfigurationService configurationService,
-			ILogger logger)
-		{
-			_syncService = syncService;
-			_downloadService = downloadService;
-			_dialogService = dialogService;
-			_loginService = loginService;
-			_navigationService = navigationService;
-			_configurationService = configurationService;
+            ISyncService syncService,
+            IDownloadService downloadService,
+            IDialogService dialogService,
+            ILoginService loginService,
+            INavigationService navigationService,
+            IConfigurationService configurationService,
+			IToastNotificationService toastNotificationService,
+            ILogger logger)
+        {
+            _syncService = syncService;
+            _downloadService = downloadService;
+            _dialogService = dialogService;
+            _loginService = loginService;
+            _navigationService = navigationService;
+            _configurationService = configurationService;
+            _toastNotificationService = toastNotificationService;
             _logger = logger;
 
             RefreshCommand = new RelayCommand(async p => await OnNavigated(), p => !IsBusy);
-			DeleteCommand = new RelayCommand(async p => await OnDeleteItem(), p => !IsBusy && SelectedItem != null);
-			DownloadCommand = new RelayCommand(async p => await OnDownloadItem(), p => !IsBusy && SelectedItem != null);
-			LogoutCommand = new RelayCommand(async p => await OnLogout(), p => !IsBusy);
-			UploadCommand = new RelayCommand(async p => await OnUpload(p), p => !IsBusy);
-		}
+            DeleteCommand = new RelayCommand(async p => await OnDeleteItem(), p => !IsBusy && SelectedItem != null);
+            DownloadCommand = new RelayCommand(async p => await OnDownloadItem(), p => !IsBusy && SelectedItem != null);
+            LogoutCommand = new RelayCommand(async p => await OnLogout(), p => !IsBusy);
+            UploadCommand = new RelayCommand(async p => await OnUpload(p), p => !IsBusy);
+        }
 
-		private ObservableCollection<SyncItem> items;
+        private ObservableCollection<SyncItem> items;
 
 		public ObservableCollection<SyncItem> Items
 		{
@@ -112,7 +115,7 @@ namespace FileSync.Client.ViewModels
                 {
                     Message = Resource.NoItemsMessage;
                 }
-            }
+			}
             catch (System.Exception e)
 			{
 				_logger.Log(e.ToString());
@@ -140,6 +143,7 @@ namespace FileSync.Client.ViewModels
 			{
 				var result = await _syncService.DeleteFileAsync(SelectedItem);
 				Message = result ? string.Format(Resource.FileDeletedMessage, SelectedItem.Name) : Resource.CannotDeleteFileMessage;
+				_toastNotificationService.ShowToast(Message);
 
 				await OnNavigated();
 			}
@@ -195,6 +199,7 @@ namespace FileSync.Client.ViewModels
 						var filename = System.IO.Path.GetFileName(files.ElementAt(x - 1));
 						UploadingMessage = string.Format(Resource.UploadFilesMessage, filename);
 					});
+					_toastNotificationService.ShowToast(Resource.FilesUploadedMessage);
 				}
 				catch (System.Exception e)
 				{

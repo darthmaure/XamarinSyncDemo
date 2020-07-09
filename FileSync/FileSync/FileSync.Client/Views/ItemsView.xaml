@@ -65,7 +65,7 @@
             </Popup>
 
             <Border Grid.Row="1" Background="{StaticResource BackgroundBusy}" AllowDrop="True">
-                <ListBox ItemsSource="{Binding Items}" Margin="0,2"
+                <ListBox ItemsSource="{Binding Items}" Margin="0,2" DataContext="{Binding}"
                          SelectedItem="{Binding SelectedItem}"
                          Style="{StaticResource ListBoxDefaultStyle}"
                          VirtualizingPanel.VirtualizationMode="Recycling"
@@ -102,8 +102,8 @@
                                     <StackPanel x:Name="buttonsPanel" Visibility="Collapsed" 
                                                 Orientation="Horizontal" Grid.Column="1" Grid.RowSpan="3"
                                                 HorizontalAlignment="Right" VerticalAlignment="Center">
-                                        <Button Command="{Binding DownloadCommand}" Style="{StaticResource ButtonItemCommandStyle}" Content="&#xE896;" ToolTip="{x:Static resources:AppResources.ToolTipDownload}"/>
-                                        <Button Command="{Binding DeleteCommand}" Style="{StaticResource ButtonItemCommandStyle}" Content="&#xE74D;" ToolTip="{x:Static resources:AppResources.ToolTipDelete}"/>
+                                        <Button Command="{Binding RelativeSource={RelativeSource AncestorType=ListBox}, Path=DataContext.DownloadCommand}" Style="{StaticResource ButtonItemCommandStyle}" Content="&#xE896;" ToolTip="{x:Static resources:AppResources.ToolTipDownload}"/>
+                                        <Button Command="{Binding RelativeSource={RelativeSource AncestorType=ListBox}, Path=DataContext.DeleteCommand}" Style="{StaticResource ButtonItemCommandStyle}" Content="&#xE74D;" ToolTip="{x:Static resources:AppResources.ToolTipDelete}"/>
                                     </StackPanel>
                                 </Grid>
                             </Border>

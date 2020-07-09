@@ -17,6 +17,8 @@ namespace FileSync.Client.ViewModels
             builder.RegisterType<NavigationService>().As<INavigationService>();
             builder.RegisterType<DownloadService>().As<IDownloadService>();
             builder.RegisterType<DialogService>().As<IDialogService>();
+            builder.RegisterType<ToastNotificationManager>().As<INotificationManager>();
+            builder.RegisterType<ToastNotificationService>().As<IToastNotificationService>();
 
             builder.RegisterType<LoginViewModel>().SingleInstance();
             builder.RegisterType<ItemsViewModel>().SingleInstance();

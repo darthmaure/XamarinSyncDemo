@@ -6,7 +6,7 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:resources="clr-namespace:FileSync.Client.Resources"
         mc:Ignorable="d"
-        WindowStyle="None"
+        WindowStyle="None" AllowsTransparency="True"
         Title="{x:Static resources:AppResources.AppName}" 
         Height="220" Width="350"
         DataContext="{Binding Source={StaticResource locator}, Path=Upload}">
