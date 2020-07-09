@@ -6,7 +6,7 @@ namespace FileSync.Client.Services
 {
     public class Logger : ILogger
     {
-        private readonly string _file = "test.log";
+        private readonly string _file = "log.log";
         public void Log(string message)
         {
             var path = Path.Combine(Path.GetDirectoryName(GetType().Assembly.Location), _file);
