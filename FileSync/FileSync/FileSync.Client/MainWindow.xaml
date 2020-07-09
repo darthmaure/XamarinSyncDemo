@@ -11,9 +11,10 @@
         SnapsToDevicePixels="True"
         UseLayoutRounding="True"
         WindowStyle="None"
+        Title="{x:Static resources:AppResources.AppName}"
         ResizeMode="CanResize" Background="Transparent"
-        MinWidth="500" MinHeight="400"
-        Height="450" Width="500" AllowDrop="True"
+        MinWidth="500" MinHeight="550"
+        Height="550" Width="500" AllowDrop="True"
         DataContext="{Binding Shell, Source={StaticResource locator}}">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">

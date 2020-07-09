@@ -37,10 +37,10 @@
                 </TextBlock>
                 <Button Grid.Column="4" Command="{Binding RefreshCommand}" Style="{StaticResource ButtonCommandStyle}" Content="&#xE72C;" ToolTip="{x:Static resources:AppResources.ToolTipRefresh}"/>
                 <Button Grid.Column="5" Command="{Binding LogoutCommand}" Style="{StaticResource ButtonCommandStyle}" Content="&#xF3B1;" ToolTip="{x:Static resources:AppResources.ToolTipLogout}"/>
-                <Button Grid.Column="6" Style="{StaticResource ButtonCommandStyle}" Content="&#xE712;" ToolTip="{x:Static resources:AppResources.ToolTipMore}" x:Name="buttonShowMore"/>
+                <ToggleButton Grid.Column="6" Style="{StaticResource ToggleButtonCommandStyle}" Content="&#xE712;" ToolTip="{x:Static resources:AppResources.ToolTipMore}" x:Name="buttonShowMore"/>
             </Grid>
-            <Popup IsOpen="{Binding ElementName=buttonShowMore, Path=IsPressed,Mode=OneWay}" 
-                   Height="60" Width="260" VerticalOffset="6"
+            <Popup IsOpen="{Binding ElementName=buttonShowMore, Path=IsChecked, Mode=TwoWay}" 
+                   Height="70" Width="260" VerticalOffset="6" StaysOpen="False"
                    PlacementTarget="{Binding ElementName=buttonShowMore}" Placement="Bottom">
                 <Border BorderBrush="{StaticResource AccentColor}" BorderThickness="1" SnapsToDevicePixels="True" Background="{StaticResource BackgroundDefault}">
                     <Grid Margin="3">
@@ -51,15 +51,30 @@
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition/>
+                            <RowDefinition/>
                         </Grid.RowDefinitions>
 
-                        <Ellipse x:Name="ellipse" Margin="4" Width="42" Height="42" Grid.RowSpan="2" Fill="{StaticResource AccentColor}"/>
-                        <TextBlock Text="&#xE77B;" FontSize="16" Grid.RowSpan="2" 
+                        <Ellipse x:Name="ellipse" Margin="4" Width="42" Height="42" Grid.RowSpan="3" Fill="{StaticResource AccentColor}"/>
+                        <TextBlock Text="&#xE77B;" FontSize="16" Grid.RowSpan="3" 
                                    FontWeight="Light" FontFamily="Segoe MDL2 Assets"
                                    VerticalAlignment="Center" HorizontalAlignment="Center"
                                    Foreground="{StaticResource ForegroundSelected}"/>
-                        <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource TextBlockLabelStyle}" VerticalAlignment="Center" Text="{Binding Path=UserName}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource TextBlockLabelStyle}" VerticalAlignment="Center" Text="{Binding Path=UserName}" FontWeight="SemiBold"/>
                         <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource TextBlockLabelStyle}" VerticalAlignment="Center" Text="{Binding Path=CurrentBucket}"/>
+                        <ProgressBar Grid.Row="2" Grid.Column="1" Maximum="{Binding Path=MaxSize}" Value="{Binding Path=TotalSize}"
+                                     Style="{StaticResource ProgressBarStyle}">
+                            <ProgressBar.ToolTip>
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} / {1} ({2:P})">
+                                            <Binding Path="TotalSize" Converter="{StaticResource FileSizeFormatConverter}"/>
+                                            <Binding Path="MaxSize"  Converter="{StaticResource FileSizeFormatConverter}"/>
+                                            <Binding Path="StorageUsage" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </ProgressBar.ToolTip>
+                        </ProgressBar>
                     </Grid>
                 </Border>
             </Popup>

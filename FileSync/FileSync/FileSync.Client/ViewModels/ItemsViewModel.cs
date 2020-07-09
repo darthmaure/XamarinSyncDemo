@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -72,6 +73,16 @@ namespace FileSync.Client.ViewModels
 			set => SetProperty(ref totalSize, value);
 		}
 
+		public long MaxSize => 1073741825; //1GB
+
+		private double storageUsage;
+
+		public double StorageUsage
+		{
+			get => storageUsage;
+			set => SetProperty(ref storageUsage, value);
+		}
+
 		private string userName;
 
 		public string UserName
@@ -99,6 +110,7 @@ namespace FileSync.Client.ViewModels
 			IsBusy = true;
 			Items = null;
 			TotalSize = default;
+			StorageUsage = default;
 			Message = null;
 			try
             {
@@ -110,13 +122,14 @@ namespace FileSync.Client.ViewModels
                 {
                     Items = new ObservableCollection<SyncItem>(items.OrderByDescending(d => d.CreateDate));
                     TotalSize = Items.Sum(d => d.Length);
+					StorageUsage = TotalSize / ((double)MaxSize);
                 }
                 else
                 {
                     Message = Resource.NoItemsMessage;
                 }
 			}
-            catch (System.Exception e)
+            catch (Exception e)
 			{
 				_logger.Log(e.ToString());
 				Message = Resource.FailedToLoadItemsMessage;
@@ -143,7 +156,7 @@ namespace FileSync.Client.ViewModels
 			{
 				var result = await _syncService.DeleteFileAsync(SelectedItem);
 				Message = result ? string.Format(Resource.FileDeletedMessage, SelectedItem.Name) : Resource.CannotDeleteFileMessage;
-				_toastNotificationService.ShowToast(Message);
+				_toastNotificationService.ShowToast(Message, !result);
 
 				await OnNavigated();
 			}
@@ -157,7 +170,7 @@ namespace FileSync.Client.ViewModels
 				IsBusy = false;
 			}
 		}
-		private async Task OnDownloadItem() 
+		private async Task OnDownloadItem()
 		{
 			if (SelectedItem == null) return;
 			Message = null;
@@ -175,6 +188,7 @@ namespace FileSync.Client.ViewModels
 			{
 				System.Diagnostics.Debug.WriteLine(e);
 				Message = Resource.CannotDonwloadFileMessage;
+				_toastNotificationService.ShowToast(Message, true);
 			}
 			finally
 			{
